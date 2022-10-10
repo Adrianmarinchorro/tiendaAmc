@@ -15,13 +15,7 @@ class Admin
 
         $password = hash_hmac('sha512', $data['password'], ENCRYPTKEY);
 
-        $sql = 'SELECT * FROM admins WHERE email=:email;';
-
-        $query = $this->db->prepare($sql);
-        $query->bindParam(':email', $data['user'], PDO::PARAM_STR);
-        $query->execute();
-
-        $admins = $query->fetchAll(PDO::FETCH_OBJ);
+        $admins = $this->findByEmail($data['user']);
 
         if( ! $admins ) {
 
@@ -51,6 +45,19 @@ class Admin
         }
 
         return $errors;
+
+    }
+
+    public function findByEmail($email)
+    {
+
+        $sql = 'SELECT * FROM admins WHERE email=:email;';
+
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_OBJ);
 
     }
 
