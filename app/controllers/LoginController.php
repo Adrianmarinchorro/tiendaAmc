@@ -391,67 +391,62 @@ class LoginController extends Controller
 
         $errors = [];
 
-        if( $_SERVER['REQUEST_METHOD'] == 'POST'){
+        if( $_SERVER['REQUEST_METHOD'] != 'POST'){
 
-            $user = $_POST['user'] ?? '';
-            $password = $_POST['password'] ?? '';
-            // si existe 'on', si no existe 'off'.
-            $remember = isset($_POST['remember']) ? 'on' : 'off';
-
-            $errors = $this->model->verifyUser($user, $password);
-
-            $value = $user . '|' . $password;
-
-            if($remember == 'on'){
-
-                $date = time() + (60 * 60 * 24 * 7);
-            } else {
-
-                // al poner un tiempo pasado, borra la coockie (la que hubiera).
-                $date = time() - 1;
-            }
-
-            setcookie('shoplogin', $value, $date, dirname(__DIR__) . ROOT);
-
-            $dataForm = [
-                'user' => $user,
-                'password' => $password,
-                'remember' => $remember,
-            ];
-
-            if(! $errors ) {
-
-                $data = $this->model->getUserByEmail($user);
-
-                $session = new Session();
-
-                //le pasamos toda la fila de la tabla de usuarios
-                $session->login($data);
-
-                //redireccion forzada
-                header("location: " . ROOT . 'shop');
-
-            } else {
-
-                $data = [
-                    'titulo' => 'Login',
-                    'menu' => false,
-                    'errors' => $errors,
-                    'data' => $dataForm,
-                ];
-
-                $this->view('login', $data);
-
-            }
-
-        } else {
-
-            //mirar esto en casa
             $this->index();
+            return;
         }
 
 
+        $user = $_POST['user'] ?? '';
+        $password = $_POST['password'] ?? '';
+        // si existe 'on', si no existe 'off'.
+        $remember = isset($_POST['remember']) ? 'on' : 'off';
 
+        $errors = $this->model->verifyUser($user, $password);
+
+        $value = $user . '|' . $password;
+
+        if($remember == 'on'){
+
+            $date = time() + (60 * 60 * 24 * 7);
+        } else {
+
+            // al poner un tiempo pasado, borra la coockie (la que hubiera).
+            $date = time() - 1;
+        }
+
+        setcookie('shoplogin', $value, $date, dirname(__DIR__) . ROOT);
+
+        $dataForm = [
+            'user' => $user,
+            'password' => $password,
+            'remember' => $remember,
+        ];
+
+        if(! $errors ) {
+
+            $data = $this->model->getUserByEmail($user);
+
+            $session = new Session();
+
+            //le pasamos toda la fila de la tabla de usuarios
+            $session->login($data);
+
+            //redireccion forzada
+            header("location: " . ROOT . 'shop');
+
+        } else {
+
+            $data = [
+                'titulo' => 'Login',
+                'menu' => false,
+                'errors' => $errors,
+                'data' => $dataForm,
+            ];
+
+            $this->view('login', $data);
+
+        }
     }
-
 }
