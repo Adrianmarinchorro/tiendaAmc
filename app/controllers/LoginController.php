@@ -150,140 +150,140 @@ class LoginController extends Controller
         $errors = [];
         $dataForm = [];
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+            $this->showRegisterForm();
+            return;
+        }
 
-            //Procesamos la informacion recibida del formulario
-            $firstName = $_POST['firstName'] ?? '';
-            $lastName1 = $_POST['lastName1'] ?? '';
-            $lastName2 = $_POST['lastName2'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $password1 = $_POST['password'] ?? '';
-            $password2 = $_POST['password2'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $city = $_POST['city'] ?? '';
-            $state = $_POST['state'] ?? '';
-            $postcode = $_POST['postcode'] ?? '';
-            $country = $_POST['country'] ?? '';
+        //Procesamos la informacion recibida del formulario
+        $firstName = $_POST['firstName'] ?? '';
+        $lastName1 = $_POST['lastName1'] ?? '';
+        $lastName2 = $_POST['lastName2'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $password1 = $_POST['password'] ?? '';
+        $password2 = $_POST['password2'] ?? '';
+        $address = $_POST['address'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $state = $_POST['state'] ?? '';
+        $postcode = $_POST['postcode'] ?? '';
+        $country = $_POST['country'] ?? '';
 
-            $dataForm = [
-                'firstName' => $firstName,
-                'lastName1' => $lastName1,
-                'lastName2' => $lastName2,
-                'email' => $email,
-                'password' => $password1,
-                'address' => $address,
-                'city' => $city,
-                'state' => $state,
-                'postcode' => $postcode,
-                'country' => $country,
+        $dataForm = [
+            'firstName' => $firstName,
+            'lastName1' => $lastName1,
+            'lastName2' => $lastName2,
+            'email' => $email,
+            'password' => $password1,
+            'address' => $address,
+            'city' => $city,
+            'state' => $state,
+            'postcode' => $postcode,
+            'country' => $country,
+            ];
+
+        if($firstName == ''){
+            $errors[] = 'El nombre es requerido';
+        }
+        if($lastName1 == ''){
+            $errors[] = 'El primer apellido es requerido';
+        }
+        if($lastName2 == ''){
+            $errors[] = 'El segundo apellido es requerido';
+        }
+        if($email ==''){
+            $errors[] =  'El email es requerido';
+        }
+        if($password1 == ''){
+            $errors[] =  'La contraseña es requerido';
+        }
+        if($password2 == ''){
+            $errors[] =  'La contraseña repetida es requerido';
+        }
+        if($address == ''){
+            $errors[] = 'La direccion es requerido';
+        }
+        if($city == ''){
+            $errors[] = 'La ciudad es requerido';
+        }
+        if($state == ''){
+            $errors[] =  'La provincia es requerido';
+        }
+        if($postcode == ''){
+            $errors[] =  'El codigo postal es requerido';
+        }
+        if($country == ''){
+            $errors[] =  'El pais es requerido';
+        }
+        if($password1 != $password2) {
+            $errors[] = 'Las contraseñas deben ser iguales';
+        }
+
+        if(count($errors) == 0) {
+
+            // enviamos a la base de datos la informacion
+            //aqui llamamos al modelo que interactua con la base de datos.
+            if($this->model->createUser($dataForm)) {
+
+                //en la url va el nombre del controller
+                $data = [
+                    'titulo' => 'Bienvenido',
+                    'menu' => false,
+                    'errors' => [],
+                    'subtitle' => 'Bienvenido/a a nuestra tienda online',
+                    'text' => 'Gracias por su registro',
+                    'color' => 'alert-success',
+                    'url' => 'menu',
+                    'colorButton' => 'btn-success',
+                    'textButton' => 'Acceder',
                 ];
 
-            if($firstName == ''){
-                array_push($errors, 'El nombre es requerido');
-            }
-            if($lastName1 == ''){
-                array_push($errors, 'El primer apellido es requerido');
-            }
-            if($lastName2 == ''){
-                array_push($errors, 'El segundo apellido es requerido');
-            }
-            if($email ==''){
-                array_push($errors, 'El email es requerido');
-            }
-            if($password1 == ''){
-                array_push($errors, 'La contraseña es requerido');
-            }
-            if($password2 == ''){
-                array_push($errors, 'La contraseña repetida es requerido');
-            }
-            if($address == ''){
-                array_push($errors, 'La direccion es requerido');
-            }
-            if($city == ''){
-                array_push($errors, 'La ciudad es requerido');
-            }
-            if($state == ''){
-                array_push($errors, 'La provincia es requerido');
-            }
-            if($postcode == ''){
-                array_push($errors, 'El codigo postal es requerido');
-            }
-            if($country == ''){
-                array_push($errors, 'El pais es requerido');
-            }
-            if($password1 != $password2) {
-                array_push($errors,'Las contraseñas deben ser iguales');
-            }
-
-            if(count($errors) == 0){
-
-                // enviamos a la base de datos la informacion
-                //aqui llamamos al modelo que interactua con la base de datos.
-                if($this->model->createUser($dataForm)) {
-
-                    //en la url va el nombre del controller
-                    $data = [
-                        'titulo' => 'Bienvenido',
-                        'menu' => false,
-                        'errors' => [],
-                        'subtitle' => 'Bienvenido/a a nuestra tienda online',
-                        'text' => 'Gracias por su registro',
-                        'color' => 'alert-success',
-                        'url' => 'menu',
-                        'colorButton' => 'btn-success',
-                        'textButton' => 'Acceder',
-                    ];
-
-                    $this->view('mensaje', $data);
-
-                } else {
-
-                    $data = [
-                        'titulo' => 'Error',
-                        'menu' => false,
-                        'errors' => [],
-                        'subtitle' => 'Error en el proceso de registro',
-                        'text' => 'Probablemente el correo ya exista',
-                        'color' => 'alert-danger',
-                        'url' => 'login',
-                        'colorButton' => 'btn-danger',
-                        'textButton' => 'Regresar',
-                    ];
-
-                    $this->view('mensaje', $data);
-                }
+                $this->view('mensaje', $data);
 
             } else {
-               // var_dump($_POST);
-               $data = [
-                    'titulo' => 'Registro',
-                    'menu' => false,
-                    'errors' => $errors,
-                    'dataForm' => $dataForm,
 
+                $data = [
+                    'titulo' => 'Error',
+                    'menu' => false,
+                    'errors' => [],
+                    'subtitle' => 'Error en el proceso de registro',
+                    'text' => 'Probablemente el correo ya exista',
+                    'color' => 'alert-danger',
+                    'url' => 'login',
+                    'colorButton' => 'btn-danger',
+                    'textButton' => 'Regresar',
                 ];
 
-             $this->view('register', $data);
-
+                $this->view('mensaje', $data);
             }
 
-
         } else {
-            //mostramos el formulario
-            // los datos que se almacenara informacion de la vista como titulo si se muestra el menu, etc.
-            $data = [
-
-                //añado el titulo que se le quiere añadir que recibira luego
+           // var_dump($_POST);
+           $data = [
                 'titulo' => 'Registro',
-                //falso si no quiero que en la vista se vea el menu.
                 'menu' => false,
+                'errors' => $errors,
+                'dataForm' => $dataForm,
 
             ];
 
-            //lamada a la vista
-            $this->view('register', $data);
+         $this->view('register', $data);
 
         }
+
+    }
+
+    public function showRegisterForm()
+    {
+
+        $data = [
+
+            'titulo' => 'Registro',
+            'menu' => false,
+
+        ];
+
+        $this->view('register', $data);
+
     }
 
     public function  changePassword($id)
