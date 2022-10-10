@@ -15,20 +15,15 @@ class AdminShopController extends Controller
 
         $session = new Session();
 
-        if($session->getLogin()) {
+        $session->redirectIfNotLogin(ROOT . 'Admin');
 
-            $data =[
-                'titulo' => 'Bienvenid@ a la administracion de la tienda',
-                'menu' => false,
-                'admin' => true,
-                'subtitle' => 'Administracion de la tienda',
-            ];
-            $this->view('admin/shop/index', $data);
-
-        } else {
-
-            header('location:' . ROOT . 'Admin');
-        }
+        $data =[
+            'titulo' => 'Bienvenid@ a la administracion de la tienda',
+            'menu' => false,
+            'admin' => true,
+            'subtitle' => 'Administracion de la tienda',
+        ];
+        $this->view('admin/shop/index', $data);
 
 
     }

@@ -51,6 +51,13 @@ class Session
         $this->login = false;
     }
 
+    public function redirectIfNotLogin($route)
+    {
+        if(!$this->login){
+            header('location:' . $route);
+        }
+    }
+
     public function getLogin(): bool
     {
         return $this->login;
