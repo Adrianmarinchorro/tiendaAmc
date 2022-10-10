@@ -41,101 +41,98 @@ class AdminUserController extends Controller
 
         if($_SERVER['REQUEST_METHOD'] != 'POST'){
 
+            $this->showCreateForm();
+            return;
+        }
+
+        $errors = [];
+
+        $name = $_POST['name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $password1 = $_POST['password'] ?? '';
+        $password2 = $_POST['password2'] ?? '';
 
 
+        $dataForm = [
+            'name' => $name,
+            'email' => $email,
+            'password' => $password1,
+        ];
+
+        if(empty($name)) {
+            $errors[] = 'El nombre de usuario es requerido';
+
+        }
+        if(empty($email)) {
+            $errors[] =  'El email es requerido';
+
+        }
+        if(empty($password1)) {
+            $errors[] =  'La contraseña es requerido';
+
+        }
+        if(empty($password2)) {
+            $errors[] =  'La verificacion de contraseña es requerida';
 
         }
 
+        if($password1 != $password2) {
+            $errors[] = 'Las claves no coinciden';
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        }
 
-            $errors = [];
+        if(! $errors ){
 
-            $name = $_POST['name'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $password1 = $_POST['password'] ?? '';
-            $password2 = $_POST['password2'] ?? '';
+           if( $this->model->createAdminUser($dataForm)){
 
-
-            $dataForm = [
-                'name' => $name,
-                'email' => $email,
-                'password' => $password1,
-            ];
-
-            if(empty($name)) {
-                $errors[] = 'El nombre de usuario es requerido';
-
-            }
-            if(empty($email)) {
-                $errors[] =  'El email es requerido';
-
-            }
-            if(empty($password1)) {
-                $errors[] =  'La contraseña es requerido';
-
-            }
-            if(empty($password2)) {
-                $errors[] =  'La verificacion de contraseña es requerida';
-
-            }
-
-            if($password1 != $password2) {
-                $errors[] =  'Las claves no coinciden';
-
-            }
-
-            if(! $errors ){
-
-               if( $this->model->createAdminUser($dataForm)){
-
-                   header('location:' . ROOT . 'adminUser');
-
-                } else {
-
-                   $data = [
-                       'titulo' => 'Error en la creacion de un usuario administrador',
-                       'menu' => false,
-                       'errors' => [],
-                       'subtitle' => 'Error al crear un nuevo usuario administrador',
-                       'text' => 'Se ha producido un error durante el proceso de creacion de un usuario administrador',
-                       'color' => 'alert-danger',
-                       'url' => 'adminUser',
-                       'colorButton' => 'btn-danger',
-                       'textButton' => 'Volver',
-                   ];
-
-                   $this->view('mensaje', $data);
-
-               }
+               header('location:' . ROOT . 'adminUser');
 
             } else {
 
-                $data = [
-                    'titulo' => 'Administracion de usuarios - Alta',
-                    'menu' => false,
-                    'admin' => true,
-                    'errors' => $errors,
-                    'data' => $dataForm,
-                ];
+               $data = [
+                   'titulo' => 'Error en la creacion de un usuario administrador',
+                   'menu' => false,
+                   'errors' => [],
+                   'subtitle' => 'Error al crear un nuevo usuario administrador',
+                   'text' => 'Se ha producido un error durante el proceso de creacion de un usuario administrador',
+                   'color' => 'alert-danger',
+                   'url' => 'adminUser',
+                   'colorButton' => 'btn-danger',
+                   'textButton' => 'Volver',
+               ];
 
-                $this->view('admin/users/create', $data);
+               $this->view('mensaje', $data);
 
-            }
-
+           }
 
         } else {
-
 
             $data = [
                 'titulo' => 'Administracion de usuarios - Alta',
                 'menu' => false,
                 'admin' => true,
-                'data' => [],
+                'errors' => $errors,
+                'data' => $dataForm,
             ];
 
             $this->view('admin/users/create', $data);
+
         }
+    }
+
+    public function showCreateForm()
+    {
+
+        $data = [
+            'titulo' => 'Administracion de usuarios - Alta',
+            'menu' => false,
+            'admin' => true,
+            'data' => [],
+        ];
+
+        $this->view('admin/users/create', $data);
+
+
     }
 
     public function update($id)
