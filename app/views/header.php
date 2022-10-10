@@ -27,7 +27,7 @@
         <?php if(isset($data['admin']) && $data['admin']): ?>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>adminuser" class="nav-link">Usuarios</a>
+                    <a href="<?= ROOT ?>adminUser" class="nav-link">Usuarios</a>
                 </li>
             </ul>
         <?php endif; ?>
