@@ -290,92 +290,100 @@ class LoginController extends Controller
     {
         $errors = [];
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-           $id = $_POST['id'] ?? '';
-           $password1 = $_POST['password'] ?? '';
-            $password2 = $_POST['password2'] ?? '';
+            $this->showChangePassForm($id);
+            return;
 
-            if($id == ''){
-                array_push($errors, 'El usuario no existe');
-            }
+        }
 
-            if($password1 == ''){
-                array_push($errors, 'La contraseña es requerida');
-            }
-            if($password2 == ''){
-                array_push($errors, 'Repetir contraseña es requerida');
-            }
+       $id = $_POST['id'] ?? '';
+       $password1 = $_POST['password'] ?? '';
+        $password2 = $_POST['password2'] ?? '';
 
-            if($password1 != $password2){
-                array_push($errors, 'Ambas contraseñas deben ser iguales');
-            }
+        if($id == ''){
+            array_push($errors, 'El usuario no existe');
+        }
 
-            // es 0 = false, 1 = true
-            if(count($errors)){
+        if($password1 == ''){
+            array_push($errors, 'La contraseña es requerida');
+        }
+        if($password2 == ''){
+            array_push($errors, 'Repetir contraseña es requerida');
+        }
 
-                $data = [
-                    'titulo' => 'Cambiar contraseña',
-                    'menu' => false,
-                    'errors' => $errors,
-                    'data' => $id,
-                    'subtitle' => 'Cambie su contraseña de acceso',
-                ];
+        if($password1 != $password2){
+            array_push($errors, 'Ambas contraseñas deben ser iguales');
+        }
 
-                $this->view('changePassword', $data);
-
-            } else {
-
-                if($this->model->changePassword($id, $password1)) {
-
-                    $data = [
-
-                        'titulo' => 'Cambiar contraseña',
-                        'menu' => false,
-                        'errors' => [],
-                        'subtitle' => 'Modificacion de la contraseña de acceso',
-                        'text' => 'La contraseña ha sido cambiada correctamente.<br>Bienvenido de nuevo.',
-                        'color' => 'alert-success',
-                        'url' => 'login',
-                        'colorButton' => 'btn-success',
-                        'textButton' => 'Regresar',
-
-                        ];
-
-                    $this->view( 'mensaje', $data);
-
-                } else {
-
-                    $data = [
-
-                        'titulo' => 'Error al cambiar contraseña',
-                        'menu' => false,
-                        'errors' => [],
-                        'subtitle' => ' Error al Modificar la contraseña de acceso',
-                        'text' => 'Existio un errror al modificar la clave de acceso.',
-                        'color' => 'alert-danger',
-                        'url' => 'login',
-                        'colorButton' => 'btn-danger',
-                        'textButton' => 'Regresar',
-                    ];
-
-                    $this->view( 'mensaje', $data);
-
-                }
-            }
-
-        } else {
+        // es 0 = false, 1 = true
+        if(count($errors)){
 
             $data = [
-
                 'titulo' => 'Cambiar contraseña',
                 'menu' => false,
+                'errors' => $errors,
                 'data' => $id,
-                'subtitle' => 'Cambia su contraseña de acceso',
+                'subtitle' => 'Cambie su contraseña de acceso',
             ];
 
             $this->view('changePassword', $data);
+
+        } else {
+
+            if($this->model->changePassword($id, $password1)) {
+
+                $data = [
+
+                    'titulo' => 'Cambiar contraseña',
+                    'menu' => false,
+                    'errors' => [],
+                    'subtitle' => 'Modificacion de la contraseña de acceso',
+                    'text' => 'La contraseña ha sido cambiada correctamente.<br>Bienvenido de nuevo.',
+                    'color' => 'alert-success',
+                    'url' => 'login',
+                    'colorButton' => 'btn-success',
+                    'textButton' => 'Regresar',
+
+                    ];
+
+                $this->view( 'mensaje', $data);
+
+            } else {
+
+                $data = [
+
+                    'titulo' => 'Error al cambiar contraseña',
+                    'menu' => false,
+                    'errors' => [],
+                    'subtitle' => ' Error al Modificar la contraseña de acceso',
+                    'text' => 'Existio un errror al modificar la clave de acceso.',
+                    'color' => 'alert-danger',
+                    'url' => 'login',
+                    'colorButton' => 'btn-danger',
+                    'textButton' => 'Regresar',
+                ];
+
+                $this->view( 'mensaje', $data);
+
+            }
         }
+
+    }
+
+
+    public function showChangePassForm($id)
+    {
+        $data = [
+
+            'titulo' => 'Cambiar contraseña',
+            'menu' => false,
+            'data' => $id,
+            'subtitle' => 'Cambia su contraseña de acceso',
+        ];
+
+        $this->view('changePassword', $data);
+
     }
 
     public function  verifyUser()
