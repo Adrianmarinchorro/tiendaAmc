@@ -16,25 +16,16 @@ class ShopController extends Controller
 
         $session = new Session();
 
-        if($session->getLogin()){
+        $session->redirectIfNotLogin( ROOT);
 
-            $data = [
+        $data = [
 
-                'title' => 'Bienvenid@ a RobaEneba',
-                'menu' => false,
+            'title' => 'Bienvenid@ a RobaEneba',
+            'menu' => false,
 
-            ];
+        ];
 
-            $this->view('shop/index' , $data);
-        } else {
-
-            header('location:' . ROOT);
-        }
-
-
-
-
-
+        $this->view('shop/index' , $data);
     }
 
 }
