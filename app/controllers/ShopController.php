@@ -16,7 +16,7 @@ class ShopController extends Controller
 
         $session = new Session();
 
-        $session->redirectIfNotLogin( ROOT);
+        $session->redirectIfNotLogin(ROOT);
 
         $data = [
 
