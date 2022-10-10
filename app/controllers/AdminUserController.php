@@ -14,25 +14,18 @@ class AdminUserController extends Controller
 
         $session = new Session();
 
-        if( $session->getLogin()){
+        $session->redirectIfNotLogin(ROOT . 'Admin');
 
-            $users = $this->model->getUser();
+        $users = $this->model->getUser();
 
-            $data =[
-                'titulo' => 'Administracion de Usuarios',
-                'menu' => false,
-                'admin' => true,
-                'users' => $users,
-            ];
+        $data =[
+            'titulo' => 'Administracion de Usuarios',
+            'menu' => false,
+            'admin' => true,
+            'users' => $users,
+        ];
 
-            $this->view('admin/users/index', $data);
-
-        } else {
-
-            header('location:' . ROOT . 'Admin');
-        }
-
-
+        $this->view('admin/users/index', $data);
 
     }
 
