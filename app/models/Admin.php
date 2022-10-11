@@ -9,7 +9,7 @@ class Admin
         $this->db = Mysqldb::getInstance()->getDatabase();
     }
 
-    public function verifyUser($data, $admins): array
+    public function verifyAdminPass($data, $admins): array
     {
         $errors = [];
 

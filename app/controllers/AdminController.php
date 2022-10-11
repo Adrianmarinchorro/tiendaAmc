@@ -58,7 +58,7 @@ class AdminController extends Controller
 
             $admins = $this->model->findByEmail($dataForm['user']);
 
-            $errors = $this->model->verifyUser($dataForm, $admins);
+            $errors = $this->model->verifyAdminPass($dataForm, $admins);
 
             if(! $errors){
 

@@ -403,7 +403,33 @@ class LoginController extends Controller
         // si existe 'on', si no existe 'off'.
         $remember = isset($_POST['remember']) ? 'on' : 'off';
 
-        $errors = $this->model->verifyUser($user, $password);
+        if(!$this->model->getUserByEmail($user)){
+
+            $errors[] = 'El usuario no existe';
+
+            $dataForm = [
+                'user' => $user,
+                'password' => $password,
+                'remember' => $remember,
+            ];
+
+            $data = [
+                'titulo' => 'Login',
+                'menu' => false,
+                'errors' => $errors,
+                'data' => $dataForm,
+            ];
+
+            $this->view('login', $data);
+
+            return;
+
+        }
+
+
+        $client = $this->model->getUserByEmail($user);
+
+        $errors = $this->model->verifyUser($client, $password);
 
         $value = $user . '|' . $password;
 
