@@ -50,8 +50,15 @@ class AdminController extends Controller
 
         if(! $errors) {
 
-            // errores con la base de datos comprobando los usuarios
-            $errors = $this->model->verifyUser($dataForm);
+           if(!$this->model->findByEmail($dataForm['user'])) {
+               $errors[] = 'El usuario no existe';
+               $this->index($errors, $dataForm);
+               return;
+            }
+
+            $admins = $this->model->findByEmail($dataForm['user']);
+
+            $errors = $this->model->verifyUser($dataForm, $admins);
 
             if(! $errors){
 
