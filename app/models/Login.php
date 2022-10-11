@@ -73,7 +73,7 @@ class Login
 
     }
 
-    public function getUserByEmail($email)
+    public function getClientByEmail($email)
     {
 
         $sql = 'SELECT * FROM users WHERE email=:email';
@@ -134,7 +134,7 @@ class Login
         return $query->execute($params);
     }
 
-    public function verifyUser($client, $password): array
+    public function verifyClientPass($client, $password): array
     {
 
         $errors = [];

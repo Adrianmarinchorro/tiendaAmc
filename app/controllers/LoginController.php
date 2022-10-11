@@ -20,7 +20,7 @@ class LoginController extends Controller
 
             $dataForm = [
 
-                'user' => $value[0],
+                'email' => $value[0],
                 'password' => $value[1],
                 'remember' => 'on',
 
@@ -398,17 +398,17 @@ class LoginController extends Controller
         }
 
 
-        $user = $_POST['user'] ?? '';
+        $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
         // si existe 'on', si no existe 'off'.
         $remember = isset($_POST['remember']) ? 'on' : 'off';
 
-        if(!$this->model->getUserByEmail($user)){
+        if(!$this->model->getClientByEmail($email)){
 
             $errors[] = 'El usuario no existe';
 
             $dataForm = [
-                'user' => $user,
+                'email' => $email,
                 'password' => $password,
                 'remember' => $remember,
             ];
@@ -427,11 +427,11 @@ class LoginController extends Controller
         }
 
 
-        $client = $this->model->getUserByEmail($user);
+        $client = $this->model->getClientByEmail($email);
 
-        $errors = $this->model->verifyUser($client, $password);
+        $errors = $this->model->verifyClientPass($client, $password);
 
-        $value = $user . '|' . $password;
+        $value = $email . '|' . $password;
 
         if($remember == 'on'){
 
@@ -445,14 +445,14 @@ class LoginController extends Controller
         setcookie('shoplogin', $value, $date, dirname(__DIR__) . ROOT);
 
         $dataForm = [
-            'user' => $user,
+            'email' => $email,
             'password' => $password,
             'remember' => $remember,
         ];
 
         if(! $errors ) {
 
-            $data = $this->model->getUserByEmail($user);
+            $data = $this->model->getClientByEmail($email);
 
             $session = new Session();
 

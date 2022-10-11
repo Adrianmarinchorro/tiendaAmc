@@ -10,7 +10,7 @@
 
                 <div class="form-group text-left">
                     <label for="user">Usuario:</label>
-                    <input type="text" name="user" class="form-control" placeholder="Escriba su correo electronico" value="<?= $data['data']['user'] ?? '' ?>">
+                    <input type="text" name="email" class="form-control" placeholder="Escriba su correo electronico" value="<?= $data['data']['email'] ?? '' ?>">
                 </div>
 
                 <div class="form-group text-left">
