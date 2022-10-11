@@ -302,18 +302,18 @@ class LoginController extends Controller
         $password2 = $_POST['password2'] ?? '';
 
         if($id == ''){
-            array_push($errors, 'El usuario no existe');
+            $errors[] = 'El usuario no existe';
         }
 
         if($password1 == ''){
-            array_push($errors, 'La contraseña es requerida');
+            $errors[] = 'La contraseña es requerida';
         }
         if($password2 == ''){
-            array_push($errors, 'Repetir contraseña es requerida');
+            $errors[] = 'Repetir contraseña es requerida';
         }
 
         if($password1 != $password2){
-            array_push($errors, 'Ambas contraseñas deben ser iguales');
+            $errors[] = 'Ambas contraseñas deben ser iguales';
         }
 
         // es 0 = false, 1 = true
