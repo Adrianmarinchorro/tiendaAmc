@@ -1,11 +1,10 @@
-<?php include_once VIEWS . 'header.php' ?>
-
+<?php include_once(VIEWS . 'header.php')?>
     <div class="card p-4 bg-light">
         <div class="card-header">
-            <h1 class="text-center">Edicion de un usuario administrador</h1>
+            <h1 class="text-center">Edición de un usuario administrador</h1>
         </div>
         <div class="card-body">
-            <form action="<?= ROOT ?>adminUser/Update/<?= $data['data']->id?>" method="POST">
+            <form action="<?= ROOT ?>adminUser/update/<?= $data['data']->id ?>" method="POST">
                 <div class="form-group text-left">
                     <label for="name">Usuario:</label>
                     <input type="text" name="name" class="form-control"
@@ -21,27 +20,24 @@
                     >
                 </div>
                 <div class="form-group text-left">
-                    <label for="password1">Clave de acceso:</label>
-                    <input type="password" name="password" class="form-control"
-                           placeholder="Escribe tu contraseña" required>
+                    <label for="password1">Clave de acceso: (dejar en blanco si no desea modificarla)</label>
+                    <input type="password" name="password1" class="form-control"
+                           placeholder="Escribe tu contraseña">
                 </div>
                 <div class="form-group text-left">
                     <label for="password2">Clave de acceso:</label>
                     <input type="password" name="password2" class="form-control"
-                           placeholder="Repite tu contraseña" required>
+                           placeholder="Repite tu contraseña">
                 </div>
-
                 <div class="form-group">
                     <label for="status">Selecciona un estado</label>
                     <select name="status" id="status" class="form-control">
-                      <!--  <option value="">Selecciona el estado del usuario</option> -->
+                        <option value="">Selecciona el estado del usuario</option>
                         <?php foreach($data['status'] as $status): ?>
-                        <option value="<?= $status->value ?>"><?= $status->description ?></option>
+                            <option value="<?= $status->value ?>"<?= $status->value == $data['data']->status ? ' selected' : '' ?>><?= $status->description ?></option>
                         <?php endforeach; ?>
-
                     </select>
                 </div>
-
                 <div class="form-group text-left">
                     <input type="submit" value="Enviar" class="btn btn-success">
                     <a href="<?= ROOT ?>adminUser" class="btn btn-info">Regresar</a>
@@ -52,8 +48,4 @@
 
         </div>
     </div>
-
-
-
-
-<?php include_once VIEWS . 'footer.php' ?>
+<?php include_once(VIEWS . 'footer.php')?>

@@ -58,6 +58,9 @@ class AdminController extends Controller
 
             $admins = $this->model->findByEmail($dataForm['user']);
 
+            //TODO refactor y añadir comprobacion si usuario esta desactivado y si el usuario no existe en los registros
+            //TODO antes estaba esta comprobacion en el model pero al refactorizar los metodos debe estar aqui
+
             $errors = $this->model->verifyAdminPass($dataForm, $admins);
 
             if(! $errors){

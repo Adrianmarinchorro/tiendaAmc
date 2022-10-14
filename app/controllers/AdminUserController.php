@@ -131,11 +131,46 @@ class AdminUserController extends Controller
     public function update($id)
     {
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        //TODO: Refactorizar el POST (carlos) entero e incluso el metodo en si
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            $errors = [];
 
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password1 = $_POST['password'] ?? '';
+            $password2 = $_POST['password2'] ?? '';
+            $status = $_POST['status'] ?? '';
 
+            if ($name == '') {
+                $errors[] = 'El nombre del usuario es requerido';
+            }
+            if ($email == '') {
+                $errors[] = 'El email es requerido';
+            }
+            if ($status == '') {
+                $errors[] = 'Selecciona un estado para el usuario';
+            }
+            if ( ! empty($password1) || ! empty($password2)) {
+                if ($password1 != $password2) {
+                    $errors[] = 'Las contraseñas no coinciden';
+                }
+            }
+
+            if ( ! $errors ) {
+                $data = [
+                    'id' => $id,
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $password1,
+                    'status' => $status,
+                ];
+                $errors = $this->model->setUser($data);
+                if ( ! $errors ) {
+                    header("location:" . ROOT . 'adminuser');
+                }
+            }
         } else {
 
             $user = $this->model->getUserById($id);
@@ -151,15 +186,37 @@ class AdminUserController extends Controller
 
             $this->view('admin/users/update', $data);
 
+        }
+    }
 
+    //TODO: Refactor carlos delete
+    public function delete($id)
+    {
+
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $errors = $this->model->delete($id);
+
+            if ( ! $errors ) {
+                header('location:' . ROOT . 'adminuser');
+            }
 
         }
 
+        $user = $this->model->getUserById($id);
+        $status = $this->model->getConfig('adminStatus');
 
-    }
+        $data = [
+            'titulo' => 'Administración de Usuarios - Eliminación',
+            'menu' => false,
+            'admin' => true,
+            'data' => $user,
+            'status' => $status,
+            'errors' => $errors,
+        ];
 
-    public function delete()
-    {
-        print 'Eliminacion de usuarios';
+        $this->view('admin/users/delete', $data);
     }
 }
