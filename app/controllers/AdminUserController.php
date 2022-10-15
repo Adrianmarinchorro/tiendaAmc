@@ -168,7 +168,7 @@ class AdminUserController extends Controller
                 ];
                 $errors = $this->model->setUser($data);
                 if ( ! $errors ) {
-                    header("location:" . ROOT . 'adminuser');
+                    header("location:" . ROOT . 'adminUser');
                 }
             }
         } else {
@@ -200,7 +200,7 @@ class AdminUserController extends Controller
             $errors = $this->model->delete($id);
 
             if ( ! $errors ) {
-                header('location:' . ROOT . 'adminuser');
+                header('location:' . ROOT . 'adminUser');
             }
 
         }

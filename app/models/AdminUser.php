@@ -93,7 +93,7 @@ class AdminUser
 
             $sql = 'UPDATE admins SET name=:name, email=:email, password=:password, status=:status, updated_at=:updated_at 
                     WHERE id=:id';
-            $pass = hash_hmac('sha512', $user['password'], ENCRIPTKEY);
+            $pass = hash_hmac('sha512', $user['password'], ENCRYPTKEY);
             $params = [
                 ':id' => $user['id'],
                 ':name' => $user['name'],

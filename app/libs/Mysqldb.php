@@ -11,7 +11,7 @@ class Mysqldb
     private $host = 'mysql';
     private $user = 'default';
     private $pass = 'secret';
-    private $dbName = 'proyecto12';
+    private $dbName = 'proyecto13';
 
     //Atributos
     private static $instancia = null;
@@ -40,7 +40,7 @@ class Mysqldb
 
         } catch(PDOException $error){
 
-            exit('La base de datos no esta accesible');
+            exit($error);
 
         }
 
