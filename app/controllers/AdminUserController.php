@@ -79,38 +79,40 @@ class AdminUserController extends Controller
            if( $this->model->createAdminUser($dataForm)){
 
                header('location:' . ROOT . 'adminUser');
+               return;
 
-            } else {
+            }
 
-               $data = [
-                   'titulo' => 'Error en la creacion de un usuario administrador',
-                   'menu' => false,
-                   'errors' => [],
-                   'subtitle' => 'Error al crear un nuevo usuario administrador',
-                   'text' => 'Se ha producido un error durante el proceso de creacion de un usuario administrador',
-                   'color' => 'alert-danger',
-                   'url' => 'adminUser',
-                   'colorButton' => 'btn-danger',
-                   'textButton' => 'Volver',
-               ];
+           $data = [
+               'titulo' => 'Error en la creacion de un usuario administrador',
+               'menu' => false,
+               'errors' => [],
+               'subtitle' => 'Error al crear un nuevo usuario administrador',
+               'text' => 'Se ha producido un error durante el proceso de creacion de un usuario administrador',
+               'color' => 'alert-danger',
+               'url' => 'adminUser',
+               'colorButton' => 'btn-danger',
+               'textButton' => 'Volver',
+           ];
 
-               $this->view('mensaje', $data);
+           $this->view('mensaje', $data);
 
-           }
+           return;
 
-        } else {
-
-            $data = [
-                'titulo' => 'Administracion de usuarios - Alta',
-                'menu' => false,
-                'admin' => true,
-                'errors' => $errors,
-                'data' => $dataForm,
-            ];
-
-            $this->view('admin/users/create', $data);
 
         }
+
+        $data = [
+            'titulo' => 'Administracion de usuarios - Alta',
+            'menu' => false,
+            'admin' => true,
+            'errors' => $errors,
+            'data' => $dataForm,
+        ];
+
+        $this->view('admin/users/create', $data);
+
+
     }
 
     public function showCreateForm()
@@ -131,11 +133,10 @@ class AdminUserController extends Controller
     public function update($id)
     {
 
+        $errors = [];
 
         //TODO: Refactorizar el POST (carlos) entero e incluso el metodo en si
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $errors = [];
 
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
@@ -171,22 +172,23 @@ class AdminUserController extends Controller
                     header("location:" . ROOT . 'adminUser');
                 }
             }
-        } else {
-
-            $user = $this->model->getUserById($id);
-            $status = $this->model->getConfig('adminStatus');
-
-            $data = [
-                'titulo' => 'Administracion de usuarios - Editar',
-                'menu' => false,
-                'admin' => true,
-                'status' => $status,
-                'data' => $user,
-            ];
-
-            $this->view('admin/users/update', $data);
-
         }
+
+        $user = $this->model->getUserById($id);
+        $status = $this->model->getConfig('adminStatus');
+
+
+        $data = [
+            'titulo' => 'Administracion de usuarios - Editar',
+            'menu' => false,
+            'admin' => true,
+            'status' => $status,
+            'data' => $user,
+        ];
+
+        $this->view('admin/users/update', $data);
+
+
     }
 
     //TODO: Refactor carlos delete

@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group text-left">
                     <label for="password1">Clave de acceso: (dejar en blanco si no desea modificarla)</label>
-                    <input type="password" name="password1" class="form-control"
+                    <input type="password" name="password" class="form-control"
                            placeholder="Escribe tu contraseña">
                 </div>
                 <div class="form-group text-left">

@@ -20,8 +20,8 @@
                     >
                 </div>
                 <div class="form-group text-left">
-                    <label for="password1">Clave de acceso:</label>
-                    <input type="password" name="password1" class="form-control"
+                    <label for="password">Clave de acceso:</label>
+                    <input type="password" name="password" class="form-control"
                            placeholder="Escribe tu contraseña" required>
                 </div>
                 <div class="form-group text-left">
