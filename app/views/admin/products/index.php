@@ -3,6 +3,7 @@
     <div class="card-header">
         <h1 class="text-center">Administración de Productos</h1>
     </div>
+    <?php if(count($data['products'])): ?>
     <div class="card-body">
         <table class="table text-center" width="100%">
             <thead>
@@ -35,10 +36,11 @@
             </tbody>
         </table>
     </div>
+    <?php endif; ?>
     <div class="card-footer">
         <div class="row">
             <div class="col-sm-6">
-                <a href="<?= ROOT ?>adminProduct/create" class="btn btn-success">
+                <a href="<?= ROOT ?>adminProduct/viewCreateForm" class="btn btn-success">
                     Crear Producto
                 </a>
             </div>
