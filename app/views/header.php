@@ -39,7 +39,6 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-2">
-
         </div>
         <div class="col-sm-8">
             <?php if (isset($data['errors']) && count($data['errors']) > 0) : ?>

@@ -1,8 +1,7 @@
 window.onload = function() {
-    document.getElementById("book").style.display = "none";
-    document.getElementById("course").style.display = "none";
     document.getElementById("createForm").action = "/adminProduct/createCourse/";
-
+    document.getElementById("book").style.display = "none";
+    document.getElementById("course").style.display = "block";
     //detectamos el cambio en el select
     document.getElementById("type").onchange = function() {
         if (this.value==1) {
