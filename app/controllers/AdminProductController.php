@@ -133,6 +133,7 @@ class AdminProductController extends Controller
                 'image' => $image,
                 'mostSold' => $mostSold,
                 'new' => $new,
+                'status' => $status,
             ];
 
             var_dump($dataForm);

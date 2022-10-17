@@ -15,7 +15,7 @@
 
                 <div class="form-group text-left">
                     <label for="password">Clave de acceso:</label>
-                                                                                                                              <!-- $data['data']['password'] ?? ''; -->
+                    <!-- $data['data']['password'] ?? ''; -->
                     <input type="password" name="password" class="form-control" placeholder="Escriba su contraseña" value="<?= $data['data']['password'] ?? '' ?>">
 
                 </div>
@@ -44,4 +44,4 @@
 
     </div>
 
-        <?php include_once 'footer.php'?>
+<?php include_once 'footer.php'?>
