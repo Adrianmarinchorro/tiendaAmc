@@ -157,9 +157,6 @@ class AdminProductController extends Controller
     {
         $errors = [];
         $dataForm = [];
-        $type = $this->model->getConfig('productType');
-        $status = $this->model->getConfig('productStatus');
-        $catalogue = $this->model->getCatalogue();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -234,6 +231,7 @@ class AdminProductController extends Controller
                 'image' => $image,
                 'mostSold' => $mostSold,
                 'new' => $new,
+                'status' => $status,
             ];
 
 

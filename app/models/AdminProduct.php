@@ -4,6 +4,8 @@ class AdminProduct
 {
     //TODO MIRAR SI HAY QUE REFACTORIZAR (CARLOS)
 
+    private const FALSE = 0;
+    private const TRUE = 1;
     private $db;
 
     public function __construct()
@@ -13,7 +15,7 @@ class AdminProduct
 
     public function getProducts()
     {
-        $sql = 'SELECT * FROM products WHERE deleted=0';
+        $sql = 'SELECT * FROM products WHERE deleted=FALSE';
         $query = $this->db->prepare($sql);
         $query->execute();
 
@@ -32,7 +34,7 @@ class AdminProduct
     // TODO: Refactor o y 1 constantes
     public function getCatalogue()
     {
-        $sql = 'SELECT id, name, type FROM products WHERE deleted=0 AND status!=0 ORDER BY type, name';
+        $sql = 'SELECT id, name, type FROM products WHERE deleted=FALSE AND status!=FALSE ORDER BY type, name';
         $query = $this->db->prepare($sql);
         $query->execute();
 
