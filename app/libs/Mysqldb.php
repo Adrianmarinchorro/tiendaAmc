@@ -29,7 +29,7 @@ class Mysqldb
             PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
         ];
 
-        try{
+        try {
 
             $this->db = new PDO(
                 'mysql:host=' . $this->host . ';dbname=' . $this->dbName,
@@ -38,13 +38,11 @@ class Mysqldb
                 $options
             );
 
-        } catch(PDOException $error){
+        } catch (PDOException $error) {
 
             exit($error);
 
         }
-
-
 
 
     }
@@ -55,15 +53,14 @@ class Mysqldb
     {
 
         // llamar a una variable estatica de la clase
-        if (is_null(self::$instancia))
-        {
+        if (is_null(self::$instancia)) {
             // objeto de la propia clase llamandose a si misma con self
             self::$instancia = new Mysqldb();
 
 
         }
-            //Devuelve el objeto
-            return self::$instancia;
+        //Devuelve el objeto
+        return self::$instancia;
 
 
     }

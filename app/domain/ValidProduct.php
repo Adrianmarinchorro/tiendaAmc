@@ -2,17 +2,17 @@
 
 interface ValidProduct
 {
-    public function validateName($name);
+    public static function validateName($name, $errors);
 
-    public function validateDescription($description);
+    public static function validateDescription($description, $errors);
 
-    public function validatePrice($price);
+    public static function validatePrice($price, $errors);
 
-    public function validateDiscount($discount);
+    public static function validateDiscount($discount, $errors);
 
-    public function validateSend($send);
+    public static function validateSend($send, $errors);
 
-    public function validateSendLowerThanPrice($send, $price);
+    public static function validateDiscountLowerThanPrice($discount, $price, $errors);
 
-    public function validatePublishedDate($published);
+    public static function validatePublishedDate($published, $errors);
 }

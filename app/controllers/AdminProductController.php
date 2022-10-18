@@ -100,7 +100,10 @@ class AdminProductController extends Controller
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
                 $errors[] = 'El descuento no puede ser mayor que el precio';
             }
-            if ( ! Validate::date($published) ) {
+
+            //$errors[] = Book::validatePublishedDate($published, $errors);
+
+           if ( ! Validate::date($published) ) {
                 $errors[] = 'La fecha o su formato no es correcto';
             } elseif ( ! Validate::dateDif($published)) {
                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
@@ -136,7 +139,7 @@ class AdminProductController extends Controller
                 'status' => $status,
             ];
 
-            var_dump($dataForm);
+            var_dump($errors);
 
             if ( ! $errors ) {
 
@@ -187,19 +190,19 @@ class AdminProductController extends Controller
             if (empty($description)) {
                 $errors[] = 'La descripción del producto es requerida';
             }
-            if ( ! is_numeric($price)) {
+            if (!is_numeric($price)) {
                 $errors[] = 'El precio del producto debe de ser un número';
             }
-            if ( ! is_numeric($discount)) {
+            if (!is_numeric($discount)) {
                 $errors[] = 'El descuento del producto debe de ser un número';
             }
-            if (! is_numeric($send)) {
+            if (!is_numeric($send)) {
                 $errors[] = 'Los gastos de envío del producto deben de ser numéricos';
             }
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
                 $errors[] = 'El descuento no puede ser mayor que el precio';
             }
-            if ( ! Validate::date($published) ) {
+            if (!Validate::date($published) ) {
                 $errors[] = 'La fecha o su formato no es correcto';
             } elseif ( ! Validate::dateDif($published)) {
                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
@@ -211,7 +214,7 @@ class AdminProductController extends Controller
             if (empty($publisher)) {
                 $errors[] = 'La editorial del libro es necesaria';
             }
-            if ( ! is_numeric($pages)) {
+            if (!is_numeric($pages)) {
                 $pages = 0;
                 $errors[] = 'La cantidad de páginas de un libro debe de ser un número';
             }
@@ -236,11 +239,11 @@ class AdminProductController extends Controller
 
 
             var_dump($dataForm);
-            if ( ! $errors ) {
+            if (!$errors) {
 
                 // Enviamos la información al modelo
 
-                if ( ! $errors ) {
+                if (!$errors) {
 
                     // Redirigimos al index de productos
 
