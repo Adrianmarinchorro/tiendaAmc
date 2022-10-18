@@ -101,14 +101,14 @@ class AdminProductController extends Controller
                 $errors[] = 'El descuento no puede ser mayor que el precio';
             }
 
-            //$errors[] = Book::validatePublishedDate($published, $errors);
 
-           if ( ! Validate::date($published) ) {
+            $errors = Course::validatePublishedDate($published, $errors);
+           /*if ( ! Validate::date($published) ) {
                 $errors[] = 'La fecha o su formato no es correcto';
             } elseif ( ! Validate::dateDif($published)) {
                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
             }
-
+*/
             if (empty($people)) {
                 $errors[] = 'El público objetivo del curso es obligatorio';
             }
@@ -139,7 +139,7 @@ class AdminProductController extends Controller
                 'status' => $status,
             ];
 
-            var_dump($errors);
+
 
             if ( ! $errors ) {
 
@@ -202,11 +202,11 @@ class AdminProductController extends Controller
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
                 $errors[] = 'El descuento no puede ser mayor que el precio';
             }
-            if (!Validate::date($published) ) {
+            /*if (!Validate::date($published) ) {
                 $errors[] = 'La fecha o su formato no es correcto';
             } elseif ( ! Validate::dateDif($published)) {
                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
-            }
+            }*/
 
             if (empty($author)) {
                 $errors[] = 'El autor del libro es necesario';

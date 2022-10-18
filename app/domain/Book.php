@@ -3,7 +3,7 @@
 class  Book
 {
 
-    public static function validatePublishedDate($published, $errors): array
+   /* public static function validatePublishedDate($published, $errors): array
     {
         if($published == '') {
             $errors[] = 'El campo fecha debe ser rellenado';
@@ -16,7 +16,7 @@ class  Book
         }
 
         return $errors;
-    }
+    } */
 
 
 
