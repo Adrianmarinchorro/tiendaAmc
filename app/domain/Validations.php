@@ -93,6 +93,7 @@ trait Validations
 
         if(!Validate::imageFile($_FILES['image']['tmp_name'])) {
             $errors[] =  'El formato de imagen no es aceptado';
+            return $errors;
         }
 
         $image = strtolower($image);

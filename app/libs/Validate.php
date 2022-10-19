@@ -45,10 +45,6 @@ class Validate
     public static function resizeImage($image, $newWidth)
     {
         $file = 'img/' . $image;
-        //soluciona error warning de acceder al array en la posicion 2 de abajo
-        if(!getimagesize($file)) {
-            return false;
-        }
 
         //comprobar que devuelve si no metemos un filename correcto
         //segun php.net fileinfo
