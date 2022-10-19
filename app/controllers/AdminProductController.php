@@ -33,18 +33,19 @@ class AdminProductController extends Controller
             header('location:' . ROOT . 'admin');
         }
     }
+
     public function viewCreateForm($errors = [], $dataForm = [])
     {
-        $type = $this->model->getConfig('productType');
-        $status = $this->model->getConfig('productStatus');
+        $typeConfig = $this->model->getConfig('productType');
+        $statusConfig = $this->model->getConfig('productStatus');
         $catalogue = $this->model->getCatalogue();
 
         $data = [
             'titulo' => 'Administración de Productos - Alta',
             'menu' => false,
             'admin' => true,
-            'type' => $type,
-            'status' => $status,
+            'type' => $typeConfig,
+            'status' => $statusConfig,
             'catalogue' => $catalogue,
             'errors' => $errors,
             'data' => $dataForm,
@@ -62,11 +63,11 @@ class AdminProductController extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $type = $_POST['type'] ?? '';
-            $name = addslashes(htmlentities($_POST['name'] ?? ''));
-            $description = addslashes(htmlentities($_POST['description'] ?? ''));
-            $price = Validate::number(intval($_POST['price']) ?? '');
-            $discount = Validate::number(intval($_POST['discount']) ?? '');
-            $send = Validate::number(intval($_POST['send']) ?? '');
+            $name = Validate::text($_POST['name'] ?? '');
+            $description = Validate::text($_POST['description'] ?? '');
+            $price = Validate::number((float) ($_POST['price'] ?? 0.0));
+            $discount = Validate::number((float) ($_POST['discount'] ?? 0.0));
+            $send = Validate::number((float) ($_POST['send'] ?? 0.0));
             $image = Validate::file($_FILES['image']['name']);
             $published = $_POST['published'] ?? '';
             $relation1 = $_POST['relation1'] != '' ? $_POST['relation1'] : 0;
@@ -77,9 +78,9 @@ class AdminProductController extends Controller
             $status = $_POST['status'] ?? '';
 
             //Courses
-            $people = addslashes(htmlentities($_POST['people'] ?? ''));
-            $objetives = addslashes(htmlentities($_POST['objetives'] ?? ''));
-            $necesites = addslashes(htmlentities($_POST['necesites'] ?? ''));
+            $people = Validate::text($_POST['people'] ?? '');
+            $objetives = Validate::text($_POST['objetives'] ?? '');
+            $necesites = Validate::text($_POST['necesites'] ?? '');
 
             // Validamos la información
             if (empty($name)) {
@@ -88,13 +89,13 @@ class AdminProductController extends Controller
             if (empty($description)) {
                 $errors[] = 'La descripción del producto es requerida';
             }
-            if ( ! is_numeric($price)) {
+            if (!is_numeric($price)) {
                 $errors[] = 'El precio del producto debe de ser un número';
             }
-            if ( ! is_numeric($discount)) {
+            if (!is_numeric($discount)) {
                 $errors[] = 'El descuento del producto debe de ser un número';
             }
-            if (! is_numeric($send)) {
+            if (!is_numeric($send)) {
                 $errors[] = 'Los gastos de envío del producto deben de ser numéricos';
             }
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
@@ -103,12 +104,12 @@ class AdminProductController extends Controller
 
 
             $errors = Course::validatePublishedDate($published, $errors);
-           /*if ( ! Validate::date($published) ) {
-                $errors[] = 'La fecha o su formato no es correcto';
-            } elseif ( ! Validate::dateDif($published)) {
-                $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
-            }
-*/
+            /*if ( ! Validate::date($published) ) {
+                 $errors[] = 'La fecha o su formato no es correcto';
+             } elseif ( ! Validate::dateDif($published)) {
+                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
+             }
+ */
             if (empty($people)) {
                 $errors[] = 'El público objetivo del curso es obligatorio';
             }
@@ -119,14 +120,32 @@ class AdminProductController extends Controller
                 $errors[] = 'Los requisitos del curso son necesarios';
             }
 
+            //TODO refactorizar el siguiente trozo del codigo
+            if ($image) {
+                if (Validate::imageFile($_FILES['image']['tmp_name'])) {
+
+                    $image = strtolower($image);
+
+                    if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                        move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
+                        Validate::resizeImage($image, 240);
+                    } else {
+                        array_push($errors, 'Error al subir el archivo de imagen');
+                    }
+                } else {
+                    array_push($errors, 'El formato de imagen no es aceptado');
+                }
+            } else {
+                array_push($errors, 'No he recibido la imagen');
+            }
 
 
             // Creamos el array de datos
             $dataForm = [
-                'type'  => $type,
-                'name'  => $name,
+                'type' => $type,
+                'name' => $name,
                 'description' => $description,
-                'people'    => $people,
+                'people' => $people,
                 'objetives' => $objetives,
                 'necesites' => $necesites,
                 'price' => $price,
@@ -137,19 +156,22 @@ class AdminProductController extends Controller
                 'mostSold' => $mostSold,
                 'new' => $new,
                 'status' => $status,
+                'relation1' => $relation1,
+                'relation2' => $relation2,
+                'relation3' => $relation3,
             ];
 
 
+            if (!$errors) {
 
-            if ( ! $errors ) {
+                $errors = $this->model->createProduct($dataForm);
 
-                // Enviamos la información al modelo
+                if ( $this->model->createProduct($dataForm) ) {
 
-                if ( ! $errors ) {
-
-                    // Redirigimos al index de productos
+                    header('location:' . ROOT . 'AdminProduct');
 
                 }
+                array_push($errors, 'Se ha producido un errpr en la inserción en la BD');
             }
         }
 
@@ -221,10 +243,10 @@ class AdminProductController extends Controller
 
             // Creamos el array de datos
             $dataForm = [
-                'type'  => $type,
-                'name'  => $name,
+                'type' => $type,
+                'name' => $name,
                 'description' => $description,
-                'author'    => $author,
+                'author' => $author,
                 'publisher' => $publisher,
                 'price' => $price,
                 'discount' => $discount,
@@ -251,7 +273,7 @@ class AdminProductController extends Controller
             }
         }
 
-        $this->viewCreateForm($errors,$dataForm);
+        $this->viewCreateForm($errors, $dataForm);
     }
 
     public function update($id)
