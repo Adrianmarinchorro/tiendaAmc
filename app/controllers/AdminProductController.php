@@ -146,8 +146,6 @@ class AdminProductController extends Controller
 
             if (!$errors) {
 
-                $errors = $this->model->createProduct($dataForm);
-
                 if ( $this->model->createProduct($dataForm) ) {
 
                     header('location:' . ROOT . 'AdminProduct');

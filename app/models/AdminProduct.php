@@ -41,6 +41,7 @@ class AdminProduct
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+
     public function createProduct($data)
     {
         $sql = 'INSERT INTO products(type, name, description, price, discount, send, image, published, relation1, relation2, relation3, mostSold, new, status, deleted, create_at, updated_at, deleted_at, author, publisher, pages, people, objetives, necesites) 
