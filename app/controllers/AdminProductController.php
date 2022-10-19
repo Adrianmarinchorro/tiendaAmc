@@ -62,6 +62,7 @@ class AdminProductController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            //product
             $type = $_POST['type'] ?? '';
             $name = Validate::text($_POST['name'] ?? '');
             $description = Validate::text($_POST['description'] ?? '');
@@ -77,30 +78,13 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
 
-            //Courses
+            //Course
             $people = Validate::text($_POST['people'] ?? '');
             $objetives = Validate::text($_POST['objetives'] ?? '');
             $necesites = Validate::text($_POST['necesites'] ?? '');
 
-            // Validamos la información
-            /*if (empty($name)) {
-                $errors[] = 'El nombre del producto es requerido';
-            }
-            if (empty($description)) {
-                $errors[] = 'La descripción del producto es requerida';
-            }
-            if (!is_numeric($price)) {
-                $errors[] = 'El precio del producto debe de ser un número';
-            }
-            if (!is_numeric($discount)) {
-                $errors[] = 'El descuento del producto debe de ser un número';
-            }
-            if (!is_numeric($send)) {
-                $errors[] = 'Los gastos de envío del producto deben de ser numéricos';
-            }
-            if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
-                $errors[] = 'El descuento no puede ser mayor que el precio';
-            }*/
+            //Validamos la información
+
             $errors = Course::validateName($name, $errors);
             $errors = Course::validateDescription($description, $errors);
             $errors = Course::validatePrice($price, $errors);
@@ -108,16 +92,9 @@ class AdminProductController extends Controller
             $errors = Course::validateSend($send, $errors);
             $errors = Course::validateDiscountLowerThanPrice($discount, $price, $errors);
             $errors = Course::validatePublishedDate($published, $errors);
-
-            if (empty($people)) {
-                $errors[] = 'El público objetivo del curso es obligatorio';
-            }
-            if (empty($objetives)) {
-                $errors[] = 'Los objetivos del curso son necesarios';
-            }
-            if (empty($necesites)) {
-                $errors[] = 'Los requisitos del curso son necesarios';
-            }
+            $errors = Course::validateObjectivePublic($people, $errors);
+            $errors = Course::validateObjetives($objetives, $errors);
+            $errors = Course::validateNecesites($necesites, $errors);
 
             //TODO refactorizar el siguiente trozo del codigo
             if ($image) {
