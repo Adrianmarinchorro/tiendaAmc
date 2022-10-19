@@ -15,4 +15,6 @@ interface ValidProduct
     public static function validateDiscountLowerThanPrice($discount, $price, $errors);
 
     public static function validatePublishedDate($published, $errors);
+
+    public static function validateImage($image, $errors);
 }

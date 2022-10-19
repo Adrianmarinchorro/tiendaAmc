@@ -97,6 +97,12 @@ class AdminProductController extends Controller
             $errors = Course::validateNecesites($necesites, $errors);
 
             //TODO refactorizar el siguiente trozo del codigo
+
+            var_dump($image);
+
+            $errors = Course::validateImage($image, $errors);
+
+            /*
             if ($image) {
                 if (Validate::imageFile($_FILES['image']['tmp_name'])) {
 
@@ -106,14 +112,16 @@ class AdminProductController extends Controller
                         move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
                         Validate::resizeImage($image, 240);
                     } else {
-                        array_push($errors, 'Error al subir el archivo de imagen');
+
+                        $errors[] = 'Error al subir el archivo de imagen';
                     }
                 } else {
-                    array_push($errors, 'El formato de imagen no es aceptado');
+                    $errors[] =  'El formato de imagen no es aceptado';
                 }
             } else {
-                array_push($errors, 'No he recibido la imagen');
+                $errors[] = 'No he recibido la imagen';
             }
+            */
 
 
             // Creamos el array de datos

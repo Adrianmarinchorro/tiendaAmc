@@ -83,4 +83,26 @@ trait Validations
 
         return $errors;
     }
+
+    public static function validateImage($image, $errors) {
+        if ($image == '') {
+            if (Validate::imageFile($_FILES['image']['tmp_name'])) {
+
+                $image = strtolower($image);
+
+                if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                    move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
+                    Validate::resizeImage($image, 240);
+                } else {
+
+                    $errors[] = 'Error al subir el archivo de imagen';
+                }
+            } else {
+                $errors[] =  'El formato de imagen no es aceptado';
+            }
+        } else {
+            $errors[] = 'No he recibido la imagen';
+        }
+        return $errors;
+    }
 }
