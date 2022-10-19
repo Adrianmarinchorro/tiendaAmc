@@ -83,7 +83,7 @@ class AdminProductController extends Controller
             $necesites = Validate::text($_POST['necesites'] ?? '');
 
             // Validamos la información
-            if (empty($name)) {
+            /*if (empty($name)) {
                 $errors[] = 'El nombre del producto es requerido';
             }
             if (empty($description)) {
@@ -100,16 +100,15 @@ class AdminProductController extends Controller
             }
             if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
                 $errors[] = 'El descuento no puede ser mayor que el precio';
-            }
-
-
+            }*/
+            $errors = Course::validateName($name, $errors);
+            $errors = Course::validateDescription($description, $errors);
+            $errors = Course::validatePrice($price, $errors);
+            $errors = Course::validateDiscount($discount, $errors);
+            $errors = Course::validateSend($send, $errors);
+            $errors = Course::validateDiscountLowerThanPrice($discount, $price, $errors);
             $errors = Course::validatePublishedDate($published, $errors);
-            /*if ( ! Validate::date($published) ) {
-                 $errors[] = 'La fecha o su formato no es correcto';
-             } elseif ( ! Validate::dateDif($published)) {
-                 $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
-             }
- */
+
             if (empty($people)) {
                 $errors[] = 'El público objetivo del curso es obligatorio';
             }
@@ -171,7 +170,7 @@ class AdminProductController extends Controller
                     header('location:' . ROOT . 'AdminProduct');
 
                 }
-                array_push($errors, 'Se ha producido un errpr en la inserción en la BD');
+                $errors[] = 'Se ha producido un error en la inserción en la BD';
             }
         }
 
