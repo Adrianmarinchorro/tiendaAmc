@@ -98,14 +98,17 @@ trait Validations
 
         $image = strtolower($image);
 
-        if (is_uploaded_file($_FILES['image']['tmp_name'])) {
-            move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
-            Validate::resizeImage($image, 240);
+        if (!is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $errors[] = 'Error al subir el archivo de imagen';
+            return $errors;
+        }
+        //Controla que no se deberia cargar la imagen en img si hay un error en  el formulario
+        if($errors) {
             return $errors;
         }
 
-        $errors[] = 'Error al subir el archivo de imagen';
-
+        move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
+        Validate::resizeImage($image, 240);
         return $errors;
     }
 }

@@ -47,7 +47,7 @@ class Validate
         $file = 'img/' . $image;
 
         //comprobar que devuelve si no metemos un filename correcto
-        //segun php.net fileinfo
+        //segun php.net fileinfo es mejor
         $info = getimagesize($file);
         $width = $info[0];
         $height = $info[1];
