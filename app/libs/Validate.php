@@ -58,7 +58,7 @@ class Validate
         $type = $info['mime'];
 
         $factor = $newWidth / $width;
-        $newHeight = $factor * $height;
+        $newHeight = round($factor * $height, 0, PHP_ROUND_HALF_DOWN);
 
         $image = imagecreatefromjpeg($file);
 
