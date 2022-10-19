@@ -242,8 +242,6 @@ class AdminProductController extends Controller
                 'status' => $status,
             ];
 
-
-            var_dump($dataForm);
             if (!$errors) {
 
                 // Enviamos la información al modelo

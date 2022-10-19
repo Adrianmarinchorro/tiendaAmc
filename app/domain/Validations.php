@@ -100,11 +100,10 @@ trait Validations
         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
             move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $image);
             Validate::resizeImage($image, 240);
-        } else {
-
-            $errors[] = 'Error al subir el archivo de imagen';
+            return $errors;
         }
 
+        $errors[] = 'Error al subir el archivo de imagen';
 
         return $errors;
     }
