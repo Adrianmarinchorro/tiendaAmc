@@ -46,6 +46,8 @@ class Validate
     {
         $file = 'img/' . $image;
 
+        //comprobar que devuelve si no metemos un filename correcto
+        //segun php.net fileinfo
         $info = getimagesize($file);
         $width = $info[0];
         $height = $info[1];
@@ -75,6 +77,11 @@ class Validate
 
     public static function imageFile($file)
     {
+        //soluciona error warning de acceder al array en la posicion 2 de abajo
+        if(!getimagesize($file)) {
+            return false;
+        }
+
         $imageArray = getimagesize($file);
         $imageType = $imageArray[2];
 

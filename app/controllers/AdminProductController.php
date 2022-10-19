@@ -98,8 +98,6 @@ class AdminProductController extends Controller
 
             //TODO refactorizar el siguiente trozo del codigo
 
-            var_dump($image);
-
             $errors = Course::validateImage($image, $errors);
 
             /*
@@ -162,6 +160,7 @@ class AdminProductController extends Controller
         $this->viewCreateForm($errors, $dataForm);
     }
 
+    //TODO: hay que aplicar los mismo cambios que en createCourse
     public function createBook()
     {
         $errors = [];
