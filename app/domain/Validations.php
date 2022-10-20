@@ -87,7 +87,7 @@ trait Validations
     public static function validateImage($image, $errors) {
 
         if(!$image) {
-            $errors[] = 'No he recibido la imagen';
+            $errors[] = 'No ha insertado ninguna imagen';
             return $errors;
         }
 
