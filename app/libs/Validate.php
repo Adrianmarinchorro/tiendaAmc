@@ -87,6 +87,7 @@ class Validate
         $imageArray = getimagesize($file);
         $imageType = $imageArray[2];
 
+        //TODO: permitir guardar restos de extensiones de imagenes.
         return (bool) (in_array($imageType, [IMAGETYPE_JPEG, IMAGETYPE_PNG]));
     }
 

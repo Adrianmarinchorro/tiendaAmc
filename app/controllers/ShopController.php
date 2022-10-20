@@ -21,10 +21,19 @@ class ShopController extends Controller
 
             'title' => 'Bienvenid@ a RobaEneba',
             'menu' => false,
+            'menu' => true,
+            'subtitle' => 'Bienvenid@ a su tienda de confianza',
             'user' => $session->getUser()
         ];
 
         $this->view('shop/index' , $data);
+    }
+
+    public function logout()
+    {
+        $session = new Session();
+        $session->logout();
+        header('location:' . ROOT);
     }
 
 }
