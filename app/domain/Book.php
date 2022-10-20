@@ -1,23 +1,33 @@
 <?php
 
-class  Book
+class Book implements validProduct
 {
+    use Validations;
 
-   /* public static function validatePublishedDate($published, $errors): array
-    {
-        if($published == '') {
-            $errors[] = 'El campo fecha debe ser rellenado';
-            return $errors;
-        }
-        if (!Validate::date($published) ) {
-            $errors[] = 'La fecha o su formato no es correcto';
-        } elseif (!Validate::dateDif($published)) {
-            $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
+    public static function  validateAuthor($author, $errors) {
+        if(strlen($author) < 3 ) {
+            $errors[] = 'El nombre del autor no puede ser inferior a tres caracteres';
         }
 
         return $errors;
-    } */
+    }
 
+    public static function validatePublisher($publisher, $errors) {
 
+        if(strlen($publisher) < 3 ) {
+            $errors[] = 'El nombre de la editorial no puede ser inferior a tres caracteres';
+        }
+
+        return $errors;
+
+    }
+
+    public static function validatePages($pages, $errors) {
+        if($pages <= 0) {
+            $errors[] = 'El numero de paginas no pueden ser 0 o negativas';
+        }
+
+        return $errors;
+    }
 
 }

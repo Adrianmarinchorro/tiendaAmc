@@ -143,12 +143,13 @@ class AdminProductController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            //product
             $type = $_POST['type'] ?? '';
-            $name = addslashes(htmlentities($_POST['name'] ?? ''));
-            $description = addslashes(htmlentities($_POST['description'] ?? ''));
-            $price = Validate::number(intval($_POST['price']) ?? '');
-            $discount = Validate::number(intval($_POST['discount']) ?? '');
-            $send = Validate::number(intval($_POST['send']) ?? '');
+            $name = Validate::text($_POST['name'] ?? '');
+            $description = Validate::text($_POST['description'] ?? '');
+            $price = Validate::number((float)($_POST['price'] ?? 0.0));
+            $discount = Validate::number((float)($_POST['discount'] ?? 0.0));
+            $send = Validate::number((float)($_POST['send'] ?? 0.0));
             $image = Validate::file($_FILES['image']['name']);
             $published = $_POST['published'] ?? '';
             $relation1 = $_POST['relation1'] != '' ? $_POST['relation1'] : 0;
@@ -158,46 +159,26 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
 
-            //Books
-            $author = addslashes(htmlentities($_POST['author'] ?? ''));
-            $publisher = addslashes(htmlentities($_POST['publisher'] ?? ''));
-            $pages = Validate::number(intval($_POST['pages']) ?? '');
+            //Book
+            $author = Validate::text($_POST['author'] ?? '');
+            $publisher = Validate::text($_POST['publisher'] ?? '');
+            $pages = Validate::text($_POST['pages'] ?? '');
 
-            // Validamos la información
-            if (empty($name)) {
-                $errors[] = 'El nombre del producto es requerido';
-            }
-            if (empty($description)) {
-                $errors[] = 'La descripción del producto es requerida';
-            }
-            if (!is_numeric($price)) {
-                $errors[] = 'El precio del producto debe de ser un número';
-            }
-            if (!is_numeric($discount)) {
-                $errors[] = 'El descuento del producto debe de ser un número';
-            }
-            if (!is_numeric($send)) {
-                $errors[] = 'Los gastos de envío del producto deben de ser numéricos';
-            }
-            if (is_numeric($price) && is_numeric($discount) && $price < $discount) {
-                $errors[] = 'El descuento no puede ser mayor que el precio';
-            }
-            /*if (!Validate::date($published) ) {
-                $errors[] = 'La fecha o su formato no es correcto';
-            } elseif ( ! Validate::dateDif($published)) {
-                $errors[] = 'La fecha de publicación no puede ser anterior a hoy';
-            }*/
+            //Validamos la información
 
-            if (empty($author)) {
-                $errors[] = 'El autor del libro es necesario';
-            }
-            if (empty($publisher)) {
-                $errors[] = 'La editorial del libro es necesaria';
-            }
-            if (!is_numeric($pages)) {
-                $pages = 0;
-                $errors[] = 'La cantidad de páginas de un libro debe de ser un número';
-            }
+            $errors = Book::validateName($name, $errors);
+            $errors = Book::validateDescription($description, $errors);
+            $errors = Book::validatePrice($price, $errors);
+            $errors = Book::validateDiscount($discount, $errors);
+            $errors = Book::validateSend($send, $errors);
+            $errors = Book::validateDiscountLowerThanPrice($discount, $price, $errors);
+            $errors = Book::validatePublishedDate($published, $errors);
+            $errors = Book::validateAuthor($author, $errors);
+            $errors = Book::validatePublisher($publisher, $errors);
+            $errors = Book::validatePages($pages, $errors);
+
+            //es lo de abajo comentado
+            $errors = Course::validateImage($image, $errors);
 
             // Creamos el array de datos
             $dataForm = [
@@ -206,26 +187,29 @@ class AdminProductController extends Controller
                 'description' => $description,
                 'author' => $author,
                 'publisher' => $publisher,
+                'pages' => $pages,
                 'price' => $price,
                 'discount' => $discount,
                 'send' => $send,
-                'pages' => $pages,
                 'published' => $published,
                 'image' => $image,
                 'mostSold' => $mostSold,
                 'new' => $new,
                 'status' => $status,
+                'relation1' => $relation1,
+                'relation2' => $relation2,
+                'relation3' => $relation3,
             ];
+
 
             if (!$errors) {
 
-                // Enviamos la información al modelo
+                if ($this->model->createBook($dataForm)) {
 
-                if (!$errors) {
-
-                    // Redirigimos al index de productos
+                    header('location:' . ROOT . 'AdminProduct');
 
                 }
+                $errors[] = 'Se ha producido un error en la inserción en la BD';
             }
         }
 
@@ -318,8 +302,8 @@ class AdminProductController extends Controller
                 'price' => $price,
                 'discount' => $discount,
                 'send' => $send,
-                'pages' => null,
                 'published' => $published,
+                'pages' => null,
                 'image' => $image,
                 'mostSold' => $mostSold,
                 'new' => $new,
