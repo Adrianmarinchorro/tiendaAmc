@@ -233,9 +233,9 @@ class AdminProductController extends Controller
     }
 
     //TODO: mirar js
-    public function updateView($id)
+    public function updateView($id, $errors = [])
     {
-        $errors = [];
+
         $typeConfig = $this->model->getConfig('productType');
         $statusConfig = $this->model->getConfig('productStatus');
         $catalogue = $this->model->getCatalogue();
@@ -298,7 +298,11 @@ class AdminProductController extends Controller
             $errors = Course::validateObjectivePublic($people, $errors);
             $errors = Course::validateObjetives($objetives, $errors);
             $errors = Course::validateNecesites($necesites, $errors);
-            $errors = Course::validateImage($image, $errors);
+
+            //ya no es obligatorio pasar una imagen
+            if($image){
+                $errors = Course::validateImage($image, $errors);
+            }
 
             // Creamos el array de datos
             $dataForm = [
@@ -330,10 +334,14 @@ class AdminProductController extends Controller
                 if (count($this->model->updateCourse($dataForm)) == 0) {
 
                     header('location:' . ROOT . 'AdminProduct');
-
+                    return;
                 }
+
                 $errors[] = 'Se ha producido un error en la inserción en la BD';
             }
+
+            $this->updateView($id, $errors);
+
         }
     }
 

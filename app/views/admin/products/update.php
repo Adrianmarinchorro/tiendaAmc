@@ -6,7 +6,7 @@
             <h1 class="text-center">Alta de un producto</h1>
         </div>
         <div class="card-body">
-            <form action="<?= ROOT ?>adminProduct/update/<?= $data['product']->id ?>" id="updateForm" method="POST" enctype="multipart/form-data">
+            <form action="<?= ROOT ?>adminProduct/updateCourse/<?= $data['product']->id ?>" id="updateForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="type">Tipo de producto</label>
                     <select name="type" id="type" class="form-control">
