@@ -123,7 +123,7 @@ class AdminProductController extends Controller
 
             if (!$errors) {
 
-                if ($this->model->createProduct($dataForm)) {
+                if ($this->model->createCourse($dataForm)) {
 
                     header('location:' . ROOT . 'AdminProduct');
 
@@ -177,8 +177,8 @@ class AdminProductController extends Controller
             $errors = Book::validatePublisher($publisher, $errors);
             $errors = Book::validatePages($pages, $errors);
 
-            //es lo de abajo comentado
-            $errors = Course::validateImage($image, $errors);
+
+            $errors = Book::validateImage($image, $errors);
 
             // Creamos el array de datos
             $dataForm = [
