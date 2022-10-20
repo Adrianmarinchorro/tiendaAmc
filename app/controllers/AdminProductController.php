@@ -327,7 +327,7 @@ class AdminProductController extends Controller
 
             if (!$errors) {
 
-                if (count($this->model->updateProduct($dataForm)) == 0) {
+                if (count($this->model->updateCourse($dataForm)) == 0) {
 
                     header('location:' . ROOT . 'AdminProduct');
 

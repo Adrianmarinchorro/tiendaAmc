@@ -129,8 +129,8 @@ class AdminProduct
 
         $query = $this->db->prepare($sql);
 
-        if ( ! $query->execute($params)) {
-            array_push($errors, 'Error al modificar el producto');
+        if (!$query->execute($params)) {
+            $errors[] = 'Error al modificar el producto';
         }
 
         return $errors;
