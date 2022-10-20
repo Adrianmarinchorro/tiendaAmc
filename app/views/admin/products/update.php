@@ -1,12 +1,12 @@
 <?php include_once(VIEWS . 'header.php')?>
     <script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
-    <script src="<?= ROOT . 'js/adminCreateProduct.js' ?>"></script>
+    <script src="<?= ROOT . 'js/adminUpdateProduct.js' ?>"></script>
     <div class="card p-4 bg-light">
         <div class="card-header">
             <h1 class="text-center">Alta de un producto</h1>
         </div>
         <div class="card-body">
-            <form action="<?= ROOT ?>adminProduct/update/<?= $data['product']->id ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= ROOT ?>adminProduct/update/<?= $data['product']->id ?>" id="updateForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="type">Tipo de producto</label>
                     <select name="type" id="type" class="form-control">

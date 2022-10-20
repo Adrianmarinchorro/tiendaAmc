@@ -22,7 +22,7 @@
                     <td class="text-center"><?= $product->name ?></td>
                     <td class="text-center"><?= html_entity_decode($product->description) ?></td>
                     <td class="text-center">
-                        <a href="<?= ROOT ?>adminProduct/update/<?= $product->id ?>"
+                        <a href="<?= ROOT ?>adminProduct/updateView/<?= $product->id ?>"
                            class="btn btn-info"
                         >Editar</a>
                     </td>
