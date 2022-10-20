@@ -10,10 +10,9 @@
                 <div class="form-group">
                     <label for="type">Tipo de producto</label>
                     <select name="type" id="type" class="form-control">
-                        <option value="">Selecciona el tipo de producto</option>
                         <?php foreach($data['type'] as $type): ?>
                             <option value="<?= $type->value ?>"
-                                <?= (isset($data['product']->type) && $data['product']->type == $type->value) ? ' selected' : '' ?>
+                                <?= (isset($data['product']->type) && $data['product']->type == $type->value) ? ' selected' : '' ?> disabled
                             ><?= $type->description ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -163,7 +162,7 @@
                 </div>
                 <div class="form-group text-left">
                     <input type="submit" value="Actualizar" class="btn btn-success">
-                    <a href="<?= ROOT ?>adminproduct" class="btn btn-info">Regresar</a>
+                    <a href="<?= ROOT ?>adminProduct" class="btn btn-info">Regresar</a>
                 </div>
             </form>
         </div>

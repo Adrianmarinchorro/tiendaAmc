@@ -284,7 +284,7 @@ class AdminProductController extends Controller
             $errors = Course::validateNecesites($necesites, $errors);
 
             //ya no es obligatorio pasar una imagen
-            if($image){
+            if ($image) {
                 $errors = Course::validateImage($image, $errors);
             }
 
@@ -334,23 +334,30 @@ class AdminProductController extends Controller
     {
 
 
-
     }
+
     //TODO: Mirar y cambiar codigo carlos
     public function delete($id)
     {
         $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $errors = $this->model->delete($id);
-
-            if (empty($errors)) {
-                header('location:' . ROOT . 'AdminProduct');
-            }
-
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+        $this->deleteView($id);
+        return;
         }
 
+        $errors = $this->model->delete($id);
+
+        if (!empty($errors)) {
+            $this->deleteView($id, $errors);
+            return;
+        }
+
+        header('location:' . ROOT . 'AdminProduct');
+    }
+
+    public function deleteView($id, $errors = [])
+    {
         $product = $this->model->getProductById($id);
         $typeConfig = $this->model->getConfig('productType');
 
@@ -360,6 +367,8 @@ class AdminProductController extends Controller
             'admin' => true,
             'type' => $typeConfig,
             'product' => $product,
+            'errors' => $errors,
         ];
+        $this->view('admin/products/delete', $data);
     }
 }

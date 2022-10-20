@@ -235,8 +235,8 @@ class AdminProduct
 
         $query = $this->db->prepare($sql);
 
-        if ( ! $query->execute($params)) {
-            array_push($errors, 'Error al borrar el producto');
+        if (!$query->execute($params)) {
+            $errors[] = 'Error al borrar el producto';
         }
 
         return $errors;
