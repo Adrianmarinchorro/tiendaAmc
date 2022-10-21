@@ -25,7 +25,5 @@ class BooksController extends Controller
         ];
 
         $this->view('books/index', $data);
-
-
     }
 }
