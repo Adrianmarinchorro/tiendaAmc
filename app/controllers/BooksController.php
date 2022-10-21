@@ -13,21 +13,19 @@ class BooksController extends Controller
     {
         $session = new Session();
 
-        if ($session->getLogin()) {
+        $session->redirectIfNotLogin(ROOT);
 
-            $books = $this->model->getBooks();
+        $books = $this->model->getBooks();
 
-            $data = [
-                'titulo' => 'Libros',
-                'menu' => true,
-                'active' => 'books',
-                'data' => $books,
-            ];
+        $data = [
+            'titulo' => 'Libros',
+            'menu' => true,
+            'active' => 'books',
+            'data' => $books,
+        ];
 
-            $this->view('books/index', $data);
+        $this->view('books/index', $data);
 
-        } else {
-            header('location:' . ROOT);
-        }
+
     }
 }
