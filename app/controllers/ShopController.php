@@ -17,13 +17,20 @@ class ShopController extends Controller
         $session = new Session();
 
         $session->redirectIfNotLogin(ROOT);
+
+        $mostSold = $this->model->getMostSold();
+        $news = $this->model->getNews();
+
+        //modificacion de carlos para mostrar los mas vendidos
         $data = [
 
             'title' => 'Bienvenid@ a RobaEneba',
-            'menu' => false,
             'menu' => true,
-            'subtitle' => 'Bienvenid@ a su tienda de confianza',
-            'user' => $session->getUser()
+            'subtitle' => 'Articulos mas vendidos',
+            'user' => $session->getUser(),
+            'data' => $mostSold,
+            'subtitle2' => 'Articulos nuevos',
+            'news' => $news,
         ];
 
         $this->view('shop/index' , $data);
@@ -34,6 +41,22 @@ class ShopController extends Controller
         $session = new Session();
         $session->logout();
         header('location:' . ROOT);
+    }
+
+    // muestra el producto, individualmente
+    public function show($id)
+    {
+        $product = $this->model->getProductById($id);
+
+        $data = [
+            'titulo' => 'Detalle del producto',
+            'menu' => true,
+            'subtitle' => $product->name,
+            'errors' => [],
+            'data' => $product,
+        ];
+
+        $this->view('shop/show', $data);
     }
 
 }

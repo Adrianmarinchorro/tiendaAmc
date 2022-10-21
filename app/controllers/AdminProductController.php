@@ -149,6 +149,7 @@ class AdminProductController extends Controller
             $description = Validate::text($_POST['description'] ?? '');
             $price = Validate::number((float)($_POST['price'] ?? 0.0));
             $discount = Validate::number((float)($_POST['discount'] ?? 0.0));
+
             $send = Validate::number((float)($_POST['send'] ?? 0.0));
             $image = Validate::file($_FILES['image']['name']);
             $published = $_POST['published'] ?? '';
