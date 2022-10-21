@@ -82,8 +82,6 @@ class Validate
             return false;
         }
 
-        var_dump(getimagesize($file));
-
         $imageArray = getimagesize($file);
         $imageType = $imageArray[2];
 

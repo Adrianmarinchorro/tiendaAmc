@@ -78,26 +78,26 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
 
-            //Course
+            //CourseDomain
             $people = Validate::text($_POST['people'] ?? '');
             $objetives = Validate::text($_POST['objetives'] ?? '');
             $necesites = Validate::text($_POST['necesites'] ?? '');
 
             //Validamos la información
 
-            $errors = Course::validateName($name, $errors);
-            $errors = Course::validateDescription($description, $errors);
-            $errors = Course::validatePrice($price, $errors);
-            $errors = Course::validateDiscount($discount, $errors);
-            $errors = Course::validateSend($send, $errors);
-            $errors = Course::validateDiscountLowerThanPrice($discount, $price, $errors);
-            $errors = Course::validatePublishedDate($published, $errors);
-            $errors = Course::validateObjectivePublic($people, $errors);
-            $errors = Course::validateObjetives($objetives, $errors);
-            $errors = Course::validateNecesites($necesites, $errors);
+            $errors = CourseDomain::validateName($name, $errors);
+            $errors = CourseDomain::validateDescription($description, $errors);
+            $errors = CourseDomain::validatePrice($price, $errors);
+            $errors = CourseDomain::validateDiscount($discount, $errors);
+            $errors = CourseDomain::validateSend($send, $errors);
+            $errors = CourseDomain::validateDiscountLowerThanPrice($discount, $price, $errors);
+            $errors = CourseDomain::validatePublishedDate($published, $errors);
+            $errors = CourseDomain::validateObjectivePublic($people, $errors);
+            $errors = CourseDomain::validateObjetives($objetives, $errors);
+            $errors = CourseDomain::validateNecesites($necesites, $errors);
 
             //es lo de abajo comentado
-            $errors = Course::validateImage($image, $errors);
+            $errors = CourseDomain::validateImage($image, $errors);
 
             // Creamos el array de datos
             $dataForm = [
@@ -160,26 +160,26 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
 
-            //Book
+            //BookDomain
             $author = Validate::text($_POST['author'] ?? '');
             $publisher = Validate::text($_POST['publisher'] ?? '');
             $pages = Validate::text($_POST['pages'] ?? '');
 
             //Validamos la información
 
-            $errors = Book::validateName($name, $errors);
-            $errors = Book::validateDescription($description, $errors);
-            $errors = Book::validatePrice($price, $errors);
-            $errors = Book::validateDiscount($discount, $errors);
-            $errors = Book::validateSend($send, $errors);
-            $errors = Book::validateDiscountLowerThanPrice($discount, $price, $errors);
-            $errors = Book::validatePublishedDate($published, $errors);
-            $errors = Book::validateAuthor($author, $errors);
-            $errors = Book::validatePublisher($publisher, $errors);
-            $errors = Book::validatePages($pages, $errors);
+            $errors = BookDomain::validateName($name, $errors);
+            $errors = BookDomain::validateDescription($description, $errors);
+            $errors = BookDomain::validatePrice($price, $errors);
+            $errors = BookDomain::validateDiscount($discount, $errors);
+            $errors = BookDomain::validateSend($send, $errors);
+            $errors = BookDomain::validateDiscountLowerThanPrice($discount, $price, $errors);
+            $errors = BookDomain::validatePublishedDate($published, $errors);
+            $errors = BookDomain::validateAuthor($author, $errors);
+            $errors = BookDomain::validatePublisher($publisher, $errors);
+            $errors = BookDomain::validatePages($pages, $errors);
 
 
-            $errors = Book::validateImage($image, $errors);
+            $errors = BookDomain::validateImage($image, $errors);
 
             // Creamos el array de datos
             $dataForm = [
@@ -266,27 +266,27 @@ class AdminProductController extends Controller
             $new = isset($_POST['new']) ? '1' : '0';
             $status = $_POST['status'] ?? '';
 
-            //Course
+            //CourseDomain
             $people = Validate::text($_POST['people'] ?? '');
             $objetives = Validate::text($_POST['objetives'] ?? '');
             $necesites = Validate::text($_POST['necesites'] ?? '');
 
             //Validamos la información
 
-            $errors = Course::validateName($name, $errors);
-            $errors = Course::validateDescription($description, $errors);
-            $errors = Course::validatePrice($price, $errors);
-            $errors = Course::validateDiscount($discount, $errors);
-            $errors = Course::validateSend($send, $errors);
-            $errors = Course::validateDiscountLowerThanPrice($discount, $price, $errors);
-            $errors = Course::validatePublishedDate($published, $errors);
-            $errors = Course::validateObjectivePublic($people, $errors);
-            $errors = Course::validateObjetives($objetives, $errors);
-            $errors = Course::validateNecesites($necesites, $errors);
+            $errors = CourseDomain::validateName($name, $errors);
+            $errors = CourseDomain::validateDescription($description, $errors);
+            $errors = CourseDomain::validatePrice($price, $errors);
+            $errors = CourseDomain::validateDiscount($discount, $errors);
+            $errors = CourseDomain::validateSend($send, $errors);
+            $errors = CourseDomain::validateDiscountLowerThanPrice($discount, $price, $errors);
+            $errors = CourseDomain::validatePublishedDate($published, $errors);
+            $errors = CourseDomain::validateObjectivePublic($people, $errors);
+            $errors = CourseDomain::validateObjetives($objetives, $errors);
+            $errors = CourseDomain::validateNecesites($necesites, $errors);
 
             //ya no es obligatorio pasar una imagen
             if ($image) {
-                $errors = Course::validateImage($image, $errors);
+                $errors = CourseDomain::validateImage($image, $errors);
             }
 
             // Creamos el array de datos
