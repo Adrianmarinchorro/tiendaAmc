@@ -153,7 +153,7 @@ class AdminUserController extends Controller
             if ($status == '') {
                 $errors[] = 'Selecciona un estado para el usuario';
             }
-            if ( ! empty($password1) || ! empty($password2)) {
+            if ( !empty($password1) || !empty($password2)) {
                 if ($password1 != $password2) {
                     $errors[] = 'Las contraseñas no coinciden';
                 }
