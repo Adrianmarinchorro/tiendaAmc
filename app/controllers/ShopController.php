@@ -166,17 +166,14 @@ class ShopController extends Controller
     {
         $session = new Session();
 
-        if ($session->getLogin()) {
+        $session->redirectIfNotLogin(ROOT);
 
-            $data = [
-                'titulo' => 'Contacta con nosotros',
-                'menu' => true,
-                'active' => 'contact',
-            ];
+        $data = [
+            'titulo' => 'Contacta con nosotros',
+            'menu' => true,
+            'active' => 'contact',
+        ];
 
-            $this->view('shop/contact', $data);
-        } else {
-            header('location:' . ROOT);
-        }
+        $this->view('shop/contact', $data);
     }
 }
