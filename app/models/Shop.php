@@ -35,7 +35,7 @@ class Shop
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function sendEmail($name, $email, $message)
+    public function sendEmail($name, $email, $message): bool
     {
         $msg = $name . ', ha enviado un mensaje nuevo. <br>';
         $msg .= 'Su correo es: ' . $email . '<br>';
@@ -49,6 +49,5 @@ class Shop
         $subject = 'Mensaje del usuario ' . $name;
 
         return mail('info@tiendamvc.local', $subject, $msg, $headers);
-
     }
 }

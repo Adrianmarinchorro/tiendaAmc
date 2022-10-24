@@ -118,20 +118,8 @@ class ShopController extends Controller
             return;
         }
 
-        if ($this->model->sendEmail($name, $email, $message)) {
-            $data = [
-                'titulo' => 'Mensaje de usuario',
-                'menu' => true,
-                'errors' => $errors,
-                'subtitle' => 'Gracias por su mensaje',
-                'text' => 'En breve recibirá noticias nuestras.',
-                'color' => 'alert-success',
-                'url' => 'shop',
-                'colorButton' => 'btn-success',
-                'textButton' => 'Regresar'
-            ];
-            $this->view('mensaje', $data);
-        } else {
+        if (!$this->model->sendEmail($name, $email, $message)) {
+
             $data = [
                 'titulo' => 'Error en el envío del correo',
                 'menu' => true,
@@ -143,8 +131,23 @@ class ShopController extends Controller
                 'colorButton' => 'btn-danger',
                 'textButton' => 'Regresar'
             ];
+
             $this->view('mensaje', $data);
+            return;
         }
+
+        $data = [
+            'titulo' => 'Mensaje de usuario',
+            'menu' => true,
+            'errors' => $errors,
+            'subtitle' => 'Gracias por su mensaje',
+            'text' => 'En breve recibirá noticias nuestras.',
+            'color' => 'alert-success',
+            'url' => 'shop',
+            'colorButton' => 'btn-success',
+            'textButton' => 'Regresar'
+        ];
+        $this->view('mensaje', $data);
     }
 
     public function contactView()
