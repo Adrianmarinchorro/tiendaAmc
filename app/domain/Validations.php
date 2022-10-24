@@ -86,7 +86,7 @@ trait Validations
 
     public static function validateImage($image, $errors) {
 
-        if(!$image) {
+        if(Validate::NotHasFile($image)) {
             $errors[] = 'No ha insertado ninguna imagen';
             return $errors;
         }
@@ -96,7 +96,8 @@ trait Validations
             return $errors;
         }
 
-        $image = strtolower($image);
+        //implementado en el validate::File
+        //$image = strtolower($image);
 
         if (!is_uploaded_file($_FILES['image']['tmp_name'])) {
             $errors[] = 'Error al subir el archivo de imagen';

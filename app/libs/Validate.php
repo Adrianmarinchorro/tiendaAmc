@@ -34,9 +34,14 @@ class Validate
 
     public static function file($string)
     {
+        if(!$string){
+            return '';
+        }
+
         $search = [' ', '*', '!', '@', '?', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ', 'ü', 'Ü', '¿', '¡'];
         $replace = ['-', '', '', '', '', 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N', 'u', 'U', '', ''];
         $file = str_replace($search,$replace, $string);
+        $file = strtolower($file);
 
         return $file;
     }
@@ -73,6 +78,11 @@ class Validate
         $string = addslashes(htmlentities($string));
 
         return $string;
+    }
+
+    public static function NotHasFile($image)
+    {
+        return !$image;
     }
 
     public static function imageFile($file)
