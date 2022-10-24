@@ -49,6 +49,8 @@ class ShopController extends Controller
     {
         $session = new Session();
 
+        $session->redirectIfNotLogin(ROOT);
+
         $product = $this->model->getProductById($id);
 
         $data = [
@@ -80,7 +82,7 @@ class ShopController extends Controller
 
     }
 
-    //TODO: Refactor
+    //TODO: try it and planning how can i improve it
     public function contact()
     {
         $errors = [];
