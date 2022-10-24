@@ -68,4 +68,9 @@ class Session
         return $this->user;
     }
 
+    public function getUserId()
+    {
+        return $this->user->id;
+    }
+
 }
