@@ -68,18 +68,16 @@ class ShopController extends Controller
     {
         $session = new Session();
 
-        if ($session->getLogin()) {
+        $session->redirectIfNotLogin(ROOT);
 
-            $data = [
-                'titulo' => 'Quienes somos',
-                'menu' => true,
-                'active' => 'whoami',
-            ];
+        $data = [
+            'titulo' => 'Quienes somos',
+            'menu' => true,
+            'active' => 'whoami',
+        ];
 
-            $this->view('shop/whoami', $data);
-        } else {
-            header('location:' . ROOT);
-        }
+        $this->view('shop/whoami', $data);
+
     }
 
     //TODO: Refactor
