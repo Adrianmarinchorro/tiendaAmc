@@ -86,7 +86,7 @@ trait Validations
 
     public static function validateImage($image, $errors) {
 
-        if(Validate::NotHasFile($image)) {
+        if(!Validate::HasFile($image)) {
             $errors[] = 'No ha insertado ninguna imagen';
             return $errors;
         }

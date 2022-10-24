@@ -80,9 +80,9 @@ class Validate
         return $string;
     }
 
-    public static function NotHasFile($image)
+    public static function HasFile($image)
     {
-        return !$image;
+        return $image;
     }
 
     public static function imageFile($file)

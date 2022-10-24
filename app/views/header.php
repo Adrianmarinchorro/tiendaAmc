@@ -20,46 +20,46 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a href="<?= ROOT ?>shop" class="navbar-brand">Tienda</a>
-    <div class="collapse navbar-collapse" id="menu">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-5">
+    <a href="<?= ROOT ?>shop" class="navbar-brand ms-3">Tienda</a>
+    <div class="navbar collapse navbar-collapse p-0" id="menu">
 
         <?php if($data['menu']): ?>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>courses" class="nav-link <?= (isset($data['active']) && $data['active']=='courses') ? 'active' : '' ?>">Cursos</a>
+                    <a href="<?= ROOT ?>courses" class="nav-link text-light <?= (isset($data['active']) && $data['active']=='courses') ? 'active' : '' ?>">Cursos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>books" class="nav-link <?= (isset($data['active']) && $data['active']=='books') ? 'active' : '' ?>">Libros</a>
+                    <a href="<?= ROOT ?>books" class="nav-link text-light <?= (isset($data['active']) && $data['active']=='books') ? 'active' : '' ?>">Libros</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>shop/whoami" class="nav-link <?= (isset($data['active']) && $data['active']=='whoami') ? 'active' : '' ?>">Quienes somos</a>
+                    <a href="<?= ROOT ?>shop/whoami" class="nav-link text-light <?= (isset($data['active']) && $data['active']=='whoami') ? 'active' : '' ?>">Quienes somos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>shop/contact" class="nav-link <?= (isset($data['active']) && $data['active']=='contact') ? 'active' : '' ?>">Contacto</a>
+                    <a href="<?= ROOT ?>shop/contact" class="nav-link text-light <?= (isset($data['active']) && $data['active']=='contact') ? 'active' : '' ?>">Contacto</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
                     <form action="<?= ROOT ?>search/products" class="form-inline" method="POST">
-                        <input type="text" name="search" id="search" class="form-control"
+                        <input type="text" name="search" id="search" class="form-control me-2"
                                size="20" placeholder="¿producto?" required
                         >
                         <button type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>shop/logout" class="nav-link">Salir</a>
+                    <a href="<?= ROOT ?>shop/logout" class="nav-link text-light me-2 ms-2">Salir</a>
                 </li>
             </ul>
         <?php endif; ?>
         <?php if(isset($data['admin']) && $data['admin']): ?>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>adminUser" class="nav-link">Usuarios</a>
+                    <a href="<?= ROOT ?>adminUser" class="nav-link text-light">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= ROOT ?>adminProduct" class="nav-link">Productos</a>
+                    <a href="<?= ROOT ?>adminProduct" class="nav-link text-light">Productos</a>
                 </li>
             </ul>
         <?php endif; ?>
