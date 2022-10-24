@@ -79,6 +79,7 @@ class ShopController extends Controller
         }
     }
 
+    //TODO: Refactor
     public function contact()
     {
         $errors = [];
