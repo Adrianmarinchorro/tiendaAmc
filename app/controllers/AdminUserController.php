@@ -132,15 +132,12 @@ class AdminUserController extends Controller
 
     public function update($id)
     {
-
         $errors = [];
 
         if($_SERVER['REQUEST_METHOD'] != 'POST'){
             $this->updateView($id);
             return;
         }
-
-        //TODO: Refactorizar el POST (carlos) entero e incluso el metodo en si
 
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
@@ -177,25 +174,11 @@ class AdminUserController extends Controller
             }
         }
 
-        /*
-        $user = $this->model->getUserById($id);
-        $status = $this->model->getConfig('adminStatus');
-
-
-        $data = [
-            'titulo' => 'Administracion de usuarios - Editar',
-            'menu' => false,
-            'admin' => true,
-            'status' => $status,
-            'data' => $user,
-        ];
-
-        $this->view('admin/users/update', $data);
-*/
+        $this->updateView($id, $errors);
 
     }
 
-    public function updateView($id)
+    public function updateView($id, $errors = [])
     {
         $user = $this->model->getUserById($id);
         $status = $this->model->getConfig('adminStatus');
@@ -207,6 +190,7 @@ class AdminUserController extends Controller
             'admin' => true,
             'status' => $status,
             'data' => $user,
+            'errors' => $errors,
         ];
 
         $this->view('admin/users/update', $data);
