@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function index()
     {
         //si existe
-        if( isset($_COOKIE['shoplogin'])) {
+        if (isset($_COOKIE['shoplogin'])) {
 
             $value = explode('|', $_COOKIE['shoplogin']);
 
@@ -29,8 +29,6 @@ class LoginController extends Controller
 
             $dataForm = null;
         }
-
-
 
 
         // los datos que se almacenara informacion de la vista como titulo si se muestra el menu, etc.
@@ -54,7 +52,7 @@ class LoginController extends Controller
 
         $errors = [];
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
             $this->showForgetForm();
             return;
@@ -63,22 +61,22 @@ class LoginController extends Controller
 
         $email = $_POST['email'] ?? '';
 
-        if($email == ''){
+        if ($email == '') {
             $errors[] = 'El email es requerido';
         }
 
-        if( ! filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'El correo electronico no es valido';
         }
 
-        if(count($errors) == 0){
+        if (count($errors) == 0) {
 
-            if( ! $this->model->existsEmail($email)) {
-                $errors[] =  'El correo electronico no existe en la base de datos';
+            if (!$this->model->existsEmail($email)) {
+                $errors[] = 'El correo electronico no existe en la base de datos';
 
             } else {
 
-                if($this->model->sendEmail($email)){
+                if ($this->model->sendEmail($email)) {
 
                     $data = [
                         'titulo' => 'Cambio de contraseña de acceso',
@@ -115,14 +113,14 @@ class LoginController extends Controller
 
         }
 
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
 
             $data = [
                 'titulo' => 'Olvido de la contraseña',
                 'menu' => false,
                 'errors' => $errors,
                 'subtitle' => '¿Olvidaste la contraseña?',
-                ];
+            ];
 
             $this->view('olvido', $data);
 
@@ -150,7 +148,7 @@ class LoginController extends Controller
         $errors = [];
         $dataForm = [];
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             $this->showRegisterForm();
             return;
         }
@@ -179,50 +177,50 @@ class LoginController extends Controller
             'state' => $state,
             'postcode' => $postcode,
             'country' => $country,
-            ];
+        ];
 
-        if($firstName == ''){
+        if ($firstName == '') {
             $errors[] = 'El nombre es requerido';
         }
-        if($lastName1 == ''){
+        if ($lastName1 == '') {
             $errors[] = 'El primer apellido es requerido';
         }
-        if($lastName2 == ''){
+        if ($lastName2 == '') {
             $errors[] = 'El segundo apellido es requerido';
         }
-        if($email ==''){
-            $errors[] =  'El email es requerido';
+        if ($email == '') {
+            $errors[] = 'El email es requerido';
         }
-        if($password1 == ''){
-            $errors[] =  'La contraseña es requerido';
+        if ($password1 == '') {
+            $errors[] = 'La contraseña es requerido';
         }
-        if($password2 == ''){
-            $errors[] =  'La contraseña repetida es requerido';
+        if ($password2 == '') {
+            $errors[] = 'La contraseña repetida es requerido';
         }
-        if($address == ''){
+        if ($address == '') {
             $errors[] = 'La direccion es requerido';
         }
-        if($city == ''){
+        if ($city == '') {
             $errors[] = 'La ciudad es requerido';
         }
-        if($state == ''){
-            $errors[] =  'La provincia es requerido';
+        if ($state == '') {
+            $errors[] = 'La provincia es requerido';
         }
-        if($postcode == ''){
-            $errors[] =  'El codigo postal es requerido';
+        if ($postcode == '') {
+            $errors[] = 'El codigo postal es requerido';
         }
-        if($country == ''){
-            $errors[] =  'El pais es requerido';
+        if ($country == '') {
+            $errors[] = 'El pais es requerido';
         }
-        if($password1 != $password2) {
+        if ($password1 != $password2) {
             $errors[] = 'Las contraseñas deben ser iguales';
         }
 
-        if(count($errors) == 0) {
+        if (count($errors) == 0) {
 
             // enviamos a la base de datos la informacion
             //aqui llamamos al modelo que interactua con la base de datos.
-            if($this->model->createUser($dataForm)) {
+            if ($this->model->createUser($dataForm)) {
 
                 //en la url va el nombre del controller
                 $data = [
@@ -257,8 +255,8 @@ class LoginController extends Controller
             }
 
         } else {
-           // var_dump($_POST);
-           $data = [
+            // var_dump($_POST);
+            $data = [
                 'titulo' => 'Registro',
                 'menu' => false,
                 'errors' => $errors,
@@ -266,7 +264,7 @@ class LoginController extends Controller
 
             ];
 
-         $this->view('register', $data);
+            $this->view('register', $data);
 
         }
 
@@ -286,38 +284,38 @@ class LoginController extends Controller
 
     }
 
-    public function  changePassword($id)
+    public function changePassword($id)
     {
         $errors = [];
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
             $this->showChangePassForm($id);
             return;
 
         }
 
-       $id = $_POST['id'] ?? '';
-       $password1 = $_POST['password'] ?? '';
+        $id = $_POST['id'] ?? '';
+        $password1 = $_POST['password'] ?? '';
         $password2 = $_POST['password2'] ?? '';
 
-        if($id == ''){
+        if ($id == '') {
             $errors[] = 'El usuario no existe';
         }
 
-        if($password1 == ''){
+        if ($password1 == '') {
             $errors[] = 'La contraseña es requerida';
         }
-        if($password2 == ''){
+        if ($password2 == '') {
             $errors[] = 'Repetir contraseña es requerida';
         }
 
-        if($password1 != $password2){
+        if ($password1 != $password2) {
             $errors[] = 'Ambas contraseñas deben ser iguales';
         }
 
         // es 0 = false, 1 = true
-        if(count($errors)){
+        if (count($errors)) {
 
             $data = [
                 'titulo' => 'Cambiar contraseña',
@@ -331,7 +329,7 @@ class LoginController extends Controller
 
         } else {
 
-            if($this->model->changePassword($id, $password1)) {
+            if ($this->model->changePassword($id, $password1)) {
 
                 $data = [
 
@@ -345,9 +343,9 @@ class LoginController extends Controller
                     'colorButton' => 'btn-success',
                     'textButton' => 'Regresar',
 
-                    ];
+                ];
 
-                $this->view( 'mensaje', $data);
+                $this->view('mensaje', $data);
 
             } else {
 
@@ -364,7 +362,7 @@ class LoginController extends Controller
                     'textButton' => 'Regresar',
                 ];
 
-                $this->view( 'mensaje', $data);
+                $this->view('mensaje', $data);
 
             }
         }
@@ -386,12 +384,12 @@ class LoginController extends Controller
 
     }
 
-    public function  verifyUser()
+    public function verifyUser()
     {
 
         $errors = [];
 
-        if( $_SERVER['REQUEST_METHOD'] != 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
             $this->index();
             return;
@@ -403,7 +401,7 @@ class LoginController extends Controller
         // si existe 'on', si no existe 'off'.
         $remember = isset($_POST['remember']) ? 'on' : 'off';
 
-        if(!$this->model->getClientByEmail($email)){
+        if (!$this->model->getClientByEmail($email)) {
 
             $errors[] = 'El usuario no existe';
 
@@ -433,7 +431,7 @@ class LoginController extends Controller
 
         $value = $email . '|' . $password;
 
-        if($remember == 'on'){
+        if ($remember == 'on') {
 
             $date = time() + (60 * 60 * 24 * 7);
         } else {
@@ -450,7 +448,7 @@ class LoginController extends Controller
             'remember' => $remember,
         ];
 
-        if(! $errors ) {
+        if (!$errors) {
 
             $data = $this->model->getClientByEmail($email);
 

@@ -12,6 +12,7 @@ class SearchController extends Controller
     public function products()
     {
         $search = $_POST['search'] ?? '';
+        $search = trim($search);
 
         if ($search == '') {
             header('location:' . ROOT . 'shop');
