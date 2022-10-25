@@ -41,7 +41,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <form action="<?= ROOT ?>search/products" class="form-inline" method="POST">
+                    <form action="<?= ROOT ?>search/products" class="d-flex" method="POST">
                         <input type="text" name="search" id="search" class="form-control me-2"
                                size="20" placeholder="¿producto?" required
                         >
