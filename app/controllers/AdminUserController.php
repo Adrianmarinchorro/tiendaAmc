@@ -196,22 +196,26 @@ class AdminUserController extends Controller
         $this->view('admin/users/update', $data);
     }
 
-    //TODO: Refactor carlos delete
     public function delete($id)
     {
-
         $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $errors = $this->model->delete($id);
-
-            if (!$errors) {
-                header('location:' . ROOT . 'adminUser');
-            }
-
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            $this->deleteView($id);
+            return;
         }
 
+        $errors = $this->model->delete($id);
+
+        if (!$errors) {
+            header('location:' . ROOT . 'adminUser');
+        }
+
+        $this->deleteView($id, $errors);
+    }
+
+    public function deleteView($id, $errors = [])
+    {
         $user = $this->model->getUserById($id);
         $status = $this->model->getConfig('adminStatus');
 
@@ -225,5 +229,6 @@ class AdminUserController extends Controller
         ];
 
         $this->view('admin/users/delete', $data);
+
     }
 }
