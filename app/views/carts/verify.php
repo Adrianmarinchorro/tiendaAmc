@@ -76,7 +76,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <a href="<?= ROOT ?>carts/thanks" class="btn btn-success" role="button">Pagar</a>
+                        <a href="<?= ROOT ?>cart/thanks" class="btn btn-success" role="button">Pagar</a>
                     </td>
                 </tr>
             </table>

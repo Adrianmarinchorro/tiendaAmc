@@ -9,29 +9,25 @@ class CartController extends Controller
         $this->model = $this->model('Cart');
     }
 
-    //TODO: refactor
     public function index($errors = [])
     {
         $session = new Session();
 
-        if ($session->getLogin()) {
+        $session->redirectIfNotLogin(ROOT);
 
-            $user_id = $session->getUserId();
-            $cart = $this->model->getCart($user_id);
+        $user_id = $session->getUserId();
+        $cart = $this->model->getCart($user_id);
 
-            $data = [
-                'titulo' => 'Carrito',
-                'menu' => true,
-                'user_id' => $user_id,
-                'data' => $cart,
-                'errors' => $errors,
-            ];
+        $data = [
+            'titulo' => 'Carrito',
+            'menu' => true,
+            'user_id' => $user_id,
+            'data' => $cart,
+            'errors' => $errors,
+        ];
 
-            $this->view('carts/index', $data);
+        $this->view('carts/index', $data);
 
-        } else {
-            header('location:' . ROOT);
-        }
     }
 
     //TODO mirar
