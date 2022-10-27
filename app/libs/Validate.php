@@ -15,7 +15,7 @@ class Validate
         $date = explode('-', $string);
 
         // si no tiene tres campos (dia, mes y año)
-        if(count($date) > 3) {
+        if (count($date) > 3) {
             return false;
         }
 
@@ -34,13 +34,13 @@ class Validate
 
     public static function file($string)
     {
-        if(!$string){
+        if (!$string) {
             return '';
         }
 
         $search = [' ', '*', '!', '@', '?', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ', 'ü', 'Ü', '¿', '¡'];
         $replace = ['-', '', '', '', '', 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N', 'u', 'U', '', ''];
-        $file = str_replace($search,$replace, $string);
+        $file = str_replace($search, $replace, $string);
         $file = strtolower($file);
 
         return $file;
@@ -61,11 +61,19 @@ class Validate
         $factor = $newWidth / $width;
         $newHeight = round($factor * $height, 0, PHP_ROUND_HALF_DOWN);
 
-        $image = imagecreatefromjpeg($file);
+        $imageArray = getimagesize($file);
+        $imageType = $imageArray[2];
+
+        if ($imageType == IMAGETYPE_JPEG) {
+            $image = imagecreatefromjpeg($file);
+        } elseif ($imageType == IMAGETYPE_PNG) {
+            $image = imagecreatefrompng($file);
+        }
+
 
         $canvas = imagecreatetruecolor($newWidth, $newHeight);
 
-        imagecopyresampled($canvas, $image, 0,0,0,0,$newWidth, $newHeight,$width, $height);
+        imagecopyresampled($canvas, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 
         imagejpeg($canvas, $file, 80);
     }
@@ -88,7 +96,7 @@ class Validate
     public static function imageFile($file)
     {
         //soluciona error warning de acceder al array en la posicion 2 de abajo
-        if(!getimagesize($file)) {
+        if (!getimagesize($file)) {
             return false;
         }
 
@@ -96,9 +104,9 @@ class Validate
         $imageType = $imageArray[2];
 
         //TODO: permitir guardar restos de extensiones de imagenes.
-        return (bool) (in_array($imageType, [IMAGETYPE_JPEG, IMAGETYPE_PNG]));
+        //cambio quite IMAGETYPE_PNG del array.
+        return (bool)(in_array($imageType, [IMAGETYPE_JPEG, IMAGETYPE_PNG]));
     }
-
 
 
 }
