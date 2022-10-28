@@ -1,7 +1,13 @@
 window.onload = function() {
-    document.getElementById("createForm").action = "/adminProduct/createCourse/";
-    document.getElementById("book").style.display = "none";
-    document.getElementById("course").style.display = "block";
+    if(document.getElementById("type").value==2) {
+        document.getElementById("createForm").action = "/adminProduct/createBook/";
+        document.getElementById("book").style.display = "block";
+        document.getElementById("course").style.display = "none";
+    } else {
+        document.getElementById("createForm").action = "/adminProduct/createCourse/";
+        document.getElementById("book").style.display = "none";
+        document.getElementById("course").style.display = "block";
+    }
     //detectamos el cambio en el select
     document.getElementById("type").onchange = function() {
         if (this.value==1) {
