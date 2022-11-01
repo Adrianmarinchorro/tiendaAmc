@@ -32,7 +32,7 @@ class AdminController extends Controller
             return;
         }
 
-        $user = $_POST['user'] ?? '';
+        $user = $_POST['admin'] ?? '';
         $password = $_POST['password'] ?? '';
 
         $dataForm = [
@@ -65,7 +65,7 @@ class AdminController extends Controller
 
             if(! $errors){
 
-                $session = new Session();
+                $session = new SessionAdmin();
                 $session->login($dataForm);
 
                 header('location:' . ROOT . 'AdminShop');

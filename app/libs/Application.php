@@ -30,9 +30,16 @@ class Application
         // entra en el if
      if(! $this->urlController) {
 
+         /*
          require_once '../app/controllers/LoginController.php';
 
          $page = new LoginController();
+         $page->index();
+         */
+
+         require_once '../app/controllers/ShopController.php';
+
+         $page = new ShopController();
          $page->index();
 
          // ucfirst primera mayuscula
@@ -89,10 +96,18 @@ class Application
          // En caso de que el controlador no existe pero la uri este llena
      } else {
 
+         /*
          require_once '../app/controllers/LoginController.php';
 
          $page = new LoginController();
          $page->index();
+         */
+
+         require_once '../app/controllers/ShopController.php';
+
+         $page = new ShopController();
+         $page->index();
+
      }
 
     }

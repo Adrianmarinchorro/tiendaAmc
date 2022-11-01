@@ -17,7 +17,7 @@ class ShopController extends Controller
 
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+       // $session->redirectIfNotLogin(ROOT);
 
         $mostSold = $this->model->getMostSold();
         $news = $this->model->getNews();

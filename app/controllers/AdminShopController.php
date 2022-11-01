@@ -13,7 +13,7 @@ class AdminShopController extends Controller
     public function index()
     {
 
-        $session = new Session();
+        $session = new SessionAdmin();
 
         $session->redirectIfNotLogin(ROOT . 'Admin');
 
@@ -25,6 +25,14 @@ class AdminShopController extends Controller
         ];
         $this->view('admin/shop/index', $data);
 
+
+    }
+
+    public function logOut()
+    {
+        $session = new SessionAdmin();
+        $session->logout();
+        header('location: ' . ROOT . 'admin');
 
     }
 }

@@ -25,7 +25,11 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-5">
-    <a href="<?= ROOT ?>shop" class="navbar-brand ms-3">Tienda</a>
+    <?php if (isset($data['admin']) && $data['admin']): ?>
+        <a href="<?= ROOT ?>AdminShop" class="navbar-brand ms-3">Tienda</a>
+    <?php else: ?>
+        <a href="<?= ROOT ?>shop" class="navbar-brand ms-3">Tienda</a>
+    <?php endif; ?>
     <div class="navbar collapse navbar-collapse p-0" id="menu">
 
         <?php if ($data['menu']): ?>
@@ -81,6 +85,10 @@
                 <li class="nav-item">
                     <a href="<?= ROOT ?>adminProduct" class="nav-link text-light">Productos</a>
                 </li>
+                <li class="nav-item text-end">
+                    <a href="<?= ROOT ?>adminShop/logOut" class="nav-link text-light me-2 ms-2">Salir</a>
+                </li>
+
             </ul>
         <?php endif; ?>
     </div>

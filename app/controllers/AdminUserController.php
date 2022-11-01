@@ -12,7 +12,7 @@ class AdminUserController extends Controller
     public function index()
     {
 
-        $session = new Session();
+        $session = new SessionAdmin();
 
         $session->redirectIfNotLogin(ROOT . 'Admin');
 
