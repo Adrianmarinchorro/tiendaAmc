@@ -13,7 +13,7 @@ class CoursesController extends Controller
     {
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+       // $session->redirectIfNotLogin(ROOT);
 
         $courses = $this->model->getCourses();
 

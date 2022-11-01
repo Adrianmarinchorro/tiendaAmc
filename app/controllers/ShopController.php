@@ -56,7 +56,7 @@ class ShopController extends Controller
     {
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+        //$session->redirectIfNotLogin(ROOT);
 
         $product = $this->model->getProductById($id);
 
@@ -77,7 +77,7 @@ class ShopController extends Controller
     {
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+        //$session->redirectIfNotLogin(ROOT);
 
         $data = [
             'titulo' => 'Quienes somos',
@@ -163,7 +163,7 @@ class ShopController extends Controller
     {
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+        //$session->redirectIfNotLogin(ROOT);
 
         $data = [
             'titulo' => 'Contacta con nosotros',

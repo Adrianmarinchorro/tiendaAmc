@@ -13,7 +13,7 @@ class BooksController extends Controller
     {
         $session = new Session();
 
-        $session->redirectIfNotLogin(ROOT);
+        //$session->redirectIfNotLogin(ROOT);
 
         $books = $this->model->getBooks();
 
