@@ -25,7 +25,7 @@ class Cart
 
     public function addProduct($product_id, $user_id)
     {
-        $sql = 'SELECT * FROM products WHERE id=:id AND state=0';
+        $sql = 'SELECT * FROM products WHERE id=:id';
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $product_id]);
         $product = $query->fetch(PDO::FETCH_OBJ);
