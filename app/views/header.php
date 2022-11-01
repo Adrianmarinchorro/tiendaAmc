@@ -58,7 +58,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php if (isset($_SESSION['cartTotal']) && $_SESSION['cartTotal'] > 0): ?>
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>cart" class="nav-link">
+                            <a href="<?= ROOT ?>cart" class="nav-link text-light">
                                 Carrito: <?= number_format($_SESSION['cartTotal'], 2) ?>&euro;
                             </a>
                         </li>
