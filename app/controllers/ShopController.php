@@ -21,6 +21,13 @@ class ShopController extends Controller
 
         $mostSold = $this->model->getMostSold();
         $news = $this->model->getNews();
+        $user = null;
+
+        //solved warning user not defined
+        if($session->getLogin()){
+            $user = $session->getUser();
+        }
+
 
         //modificacion de carlos para mostrar los mas vendidos
         $data = [
@@ -28,7 +35,7 @@ class ShopController extends Controller
             'titulo' => 'Bienvenid@ a RobaEneba',
             'menu' => true,
             'subtitle' => 'Articulos mas vendidos',
-            'user' => $session->getUser(),
+            'user' => $user,
             'data' => $mostSold,
             'subtitle2' => 'Articulos nuevos',
             'news' => $news,
