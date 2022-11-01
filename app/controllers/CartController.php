@@ -36,6 +36,9 @@ class CartController extends Controller
         $errors = [];
 
         if ($this->model->verifyProduct($product_id, $user_id) == false) {
+
+            //if()
+
             if ($this->model->addProduct($product_id, $user_id) == false) {
                 $errors[] = 'Error al insertar el producto en el carrito';
             }

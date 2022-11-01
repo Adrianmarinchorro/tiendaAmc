@@ -50,7 +50,8 @@ class Session
 
         unset($_SESSION['user']);
         unset($this->user);
-        session_destroy();
+        //comentado para no destruir todas las sessiones si te deslogeas con un usuario.
+        //session_destroy();
         $this->login = false;
     }
 

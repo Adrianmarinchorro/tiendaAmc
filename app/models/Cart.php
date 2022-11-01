@@ -12,7 +12,7 @@ class Cart
 
     public function verifyProduct($product_id, $user_id)
     {
-        $sql = 'SELECT * FROM carts WHERE product_id=:product_id AND user_id=:user_id';
+        $sql = 'SELECT * FROM carts WHERE product_id=:product_id AND user_id=:user_id AND state=0';
         $query = $this->db->prepare($sql);
         $params = [
             ':product_id' => $product_id,
@@ -25,7 +25,7 @@ class Cart
 
     public function addProduct($product_id, $user_id)
     {
-        $sql = 'SELECT * FROM products WHERE id=:id';
+        $sql = 'SELECT * FROM products WHERE id=:id AND state=0';
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $product_id]);
         $product = $query->fetch(PDO::FETCH_OBJ);
@@ -53,7 +53,7 @@ class Cart
                 c.send as send, c.discount as discount, p.price as price, p.image as image,
                 p.description as description, p.name as name
                 FROM carts as c, products as p
-                WHERE c.user_id=:user_id AND state=0 AND c.product_id=p.id';
+                WHERE c.user_id=:user_id AND c.state=0 AND c.product_id=p.id';
 
         $query = $this->db->prepare($sql);
         $query->execute([':user_id' => $user_id]);
@@ -64,7 +64,7 @@ class Cart
     //TODO mirar
     public function update($user, $product, $quantity)
     {
-        $sql = 'UPDATE carts SET quantity=:quantity WHERE user_id=:user_id AND product_id=:product_id';
+        $sql = 'UPDATE carts SET quantity=:quantity WHERE user_id=:user_id AND product_id=:product_id AND state=0';
         $query = $this->db->prepare($sql);
         $params = [
             ':user_id' => $user,
@@ -78,7 +78,7 @@ class Cart
     //TODO: mirar
     public function delete($product, $user)
     {
-        $sql = 'DELETE FROM carts WHERE user_id=:user_id AND product_id=:product_id';
+        $sql = 'DELETE FROM carts WHERE user_id=:user_id AND product_id=:product_id AND state=0';
         $query = $this->db->prepare($sql);
         $params = [
             ':user_id' => $user,

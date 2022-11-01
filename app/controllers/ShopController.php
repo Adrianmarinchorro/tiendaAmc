@@ -60,6 +60,12 @@ class ShopController extends Controller
 
         $product = $this->model->getProductById($id);
 
+        $userId = null;
+
+        if($session->getLogin()){
+            $userId = $session->getUserId();
+        }
+
         $data = [
             'titulo' => 'Detalle del producto',
             'menu' => true,
@@ -67,7 +73,7 @@ class ShopController extends Controller
             'back' => $back,
             'errors' => [],
             'data' => $product,
-            'user_id' => $session->getUserId(),
+            'user_id' => $userId,
         ];
 
         $this->view('shop/show', $data);

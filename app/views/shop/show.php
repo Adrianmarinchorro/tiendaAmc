@@ -28,5 +28,10 @@
     <!-- luego entender mejor esto -->
     <a href="<?= ROOT . (!empty($data['back']) ? $data['back'] : 'shop') ?>" class="btn btn-success">Volver al listado
         de productos</a>
+<?php if (isset($_SESSION['user'])): ?>
     <a href="<?= ROOT ?>cart/addproduct/<?= $data['data']->id ?>/<?= $data['user_id'] ?>" class="btn btn-primary">Comprar</a>
+<?php else: ?>
+    <a href="<?= ROOT ?>login" class="btn btn-primary">Comprar</a>
+<?php endif; ?>
+
 <?php include_once dirname(__DIR__) . ROOT . 'footer.php' ?>

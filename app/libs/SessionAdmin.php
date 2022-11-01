@@ -47,7 +47,7 @@ class SessionAdmin
 
         unset($_SESSION['admin']);
         unset($this->user);
-        session_destroy();
+        //session_destroy();
         $this->login = false;
     }
 
